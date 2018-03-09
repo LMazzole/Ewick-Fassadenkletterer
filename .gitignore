@@ -223,3 +223,8 @@ RemoteSystemsTempFiles
 */.project
 */.settings
 libraries/
+
+*/.pioenvs
+*/.piolibdeps
+*/.clang_complete
+*/.gcc-flags.json

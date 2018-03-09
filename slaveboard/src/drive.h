@@ -10,7 +10,7 @@
 
 
 //#include "Arduino.h"
-#include "global.h"
+#include "pinmapping.h"
 
 class Drive
 {
