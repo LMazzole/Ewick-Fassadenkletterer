@@ -1,5 +1,5 @@
 /*
- * motor.h
+ * drive.h
  *
  *  Created on: 08.03.2018
  *      Author: Luca
@@ -9,8 +9,8 @@
 #define DRIVE_H_
 
 
-//#include "Arduino.h"
 #include "global.h"
+#include "Arduino.h"
 
 class Drive
 {
@@ -20,6 +20,7 @@ class Drive
 
   public:
     Drive();
+    void test();
     void move(int direction, int distance,int velocity);
 
 };

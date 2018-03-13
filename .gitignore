@@ -228,3 +228,4 @@ libraries/
 */.piolibdeps
 */.clang_complete
 */.gcc-flags.json
+mainboard/lib/virtuino/examples/

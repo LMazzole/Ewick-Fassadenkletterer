@@ -5,51 +5,33 @@
 #include "Arduino.h"
 #include <Wire.h>
 #include <SPI.h>
+#include <Ethernet.h>
 
 #include "global.h"
+#include "comm.h"
 #include "drive.h"
-
-
+#include "VirtuinoBluetooth.h"
 
 // erstelle object antrieb
 Drive drive;
-
+Communicate comm;
+VirtuinoBluetooth virtuino(Serial1);
 
 //=============================================================================================================
 void setup()
 {
-  Serial.begin(115200);
+  // Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
 
-  pinMode(ledOpen, OUTPUT);
-  pinMode(ledClose, OUTPUT);
-  pinMode(doorPin, INPUT);
-  pinMode(button0, INPUT);
-  pinMode(button1, INPUT);
-  pinMode(button2, INPUT);
-  pinMode(button3, INPUT);
-  pinMode(button4, INPUT);
-  pinMode(button5, INPUT);
-  pinMode(button6, INPUT);
-  pinMode(button7, INPUT);
-  pinMode(button8, INPUT);
-  pinMode(button9, INPUT);
-  pinMode(buttonStar, INPUT);
-  pinMode(buttonHash, INPUT);
-  digitalWrite(ledOpen, LOW);
-  digitalWrite(ledClose, LOW);
-  analogWrite(doorPin, 0);
-  digitalWrite(button0, HIGH);
-  digitalWrite(button1, HIGH);
-  digitalWrite(button2, HIGH);
-  digitalWrite(button3, HIGH);
-  digitalWrite(button4, HIGH);
-  digitalWrite(button5, HIGH);
-  digitalWrite(button6, HIGH);
-  digitalWrite(button7, HIGH);
-  digitalWrite(button8, HIGH);
-  digitalWrite(button9, HIGH);
-  digitalWrite(buttonStar, HIGH);
-  digitalWrite(buttonHash, HIGH);
+
+  virtuino.DEBUG=true;               // set this value TRUE to enable the serial monitor status
+  Serial.begin(9600);                // Set serial monitor baud rate
+
+  Serial1.begin(9600);               // Enable this line if you want to use hardware serial (Mega, DUE etc.)
+
+  // Use virtuino.vPinMode instead default pinMode method for digital input or digital output pins.
+   // pinMode(13,OUTPUT);
+   virtuino.vPinMode(22,OUTPUT);
 
 }
 
@@ -57,8 +39,11 @@ void setup()
 void loop()
 {
 
-drive.move(links,100, 30);
+//drive.move(links,100, 30);
 
-  
+virtuino.run();
+// drive.test();
+// comm.test();
+
+
 }
-  
