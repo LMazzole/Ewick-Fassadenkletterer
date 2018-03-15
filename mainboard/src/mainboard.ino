@@ -6,44 +6,52 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <Ethernet.h>
+#include <stdio.h>
 
 #include "global.h"
 #include "comm.h"
 #include "drive.h"
 #include "VirtuinoBluetooth.h"
 
-// erstelle object antrieb
+
 Drive drive;
-Communicate comm;
-VirtuinoBluetooth virtuino(Serial1);
+Communicate bluetooth(Serial1,9600);
 
 //=============================================================================================================
-void setup()
-{
-  // Serial.begin(115200);
-  pinMode(LED_BUILTIN, OUTPUT);
+void setup(){
+  // Overview over the PIN-defines are in global.h
 
-
-  virtuino.DEBUG=true;               // set this value TRUE to enable the serial monitor status
   Serial.begin(9600);                // Set serial monitor baud rate
 
-  Serial1.begin(9600);               // Enable this line if you want to use hardware serial (Mega, DUE etc.)
+  bluetooth.DEBUG=true;               // set this value TRUE to enable the serial monitor status
+
 
   // Use virtuino.vPinMode instead default pinMode method for digital input or digital output pins.
-   // pinMode(13,OUTPUT);
-   virtuino.vPinMode(22,OUTPUT);
+   //pinMode(pinalias, OUTPUT);
+   pinMode(LED_BUILTIN, OUTPUT);
+   bluetooth.vPinMode(testLED,OUTPUT);
+
+   //== PIN MOTOR====
+   //==UP
+
+
+
+   //==DOWN
+
+
+   //== PIN WINCH====
+
+
+   //== PIN PNEUMATIC
+
 
 }
 
 //=========================================================================================
-void loop()
-{
+void loop(){
 
-//drive.move(links,100, 30);
-
-virtuino.run();
+bluetooth.run();
 // drive.test();
-// comm.test();
 
 
 }

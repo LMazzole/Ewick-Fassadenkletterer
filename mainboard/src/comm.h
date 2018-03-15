@@ -6,13 +6,14 @@
 #include "Arduino.h"
 #include "VirtuinoBluetooth.h"
 
-class Communicate
+class Communicate : public VirtuinoBluetooth
 {
   private:
-    // VirtuinoBluetooth virtuino;
-
+    HardwareSerial &uart = Serial1;
   public:
-    Communicate();
+    // Communicate();
+    Communicate(HardwareSerial &uart);
+    Communicate(HardwareSerial &uart, uint32_t baud);
     void test();
 
 };

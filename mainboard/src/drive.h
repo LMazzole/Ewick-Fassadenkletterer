@@ -15,13 +15,10 @@
 class Drive
 {
   private:
-    int dir = -1; 	// direction -1 = left 1 = right
-    int pos = 0;	// Position
 
   public:
     Drive();
     void test();
-    void move(int direction, int distance,int velocity);
 
 };
 

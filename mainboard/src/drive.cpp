@@ -12,11 +12,6 @@ Drive::Drive(){
 }
 
 
-void Drive::move(int direction, int distance, int velocity){
-  //TODO Function implementieren
-  //Serial.write(direction,2);
-}
-
 void Drive::test(){
   for (int i = 0; i < 5; i++) {
     digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
