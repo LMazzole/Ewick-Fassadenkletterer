@@ -11,6 +11,8 @@
 #include "global.h"
 #include "comm.h"
 #include "drive.h"
+#inlcude "pneumatic.h"
+#include "winch.h"
 #include "VirtuinoBluetooth.h"
 
 
