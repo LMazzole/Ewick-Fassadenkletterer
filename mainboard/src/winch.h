@@ -5,16 +5,32 @@
 #include "global.h"
 #include "Arduino.h"
 
+// #include <stdio.h>
+// #include <string>
+// #include <iostream>
+
+using namespace std;
+
 class Winch
 {
-  private:
-
   public:
-    // Communicate();
     Winch();
-    void up(int distanz);
-    void down(int distanz);
+    void drive(int distanz, int direction);
+    double convertDistanzTime(int distanz);
+    double checkPosition(int distanz, int direction);
     void test();
+
+//Direction
+// UP = -1;
+// DOWN = 1;
+
+  private:
+    double drivetime =0.0;
+    int position = 0;
+    int distanz = 0;
+    const int winchspeed = 4*1000/60; //Winchspeed: 4m/min
+    const int min_distanz_Winch = 0; //
+    const int max_distanz_Winch = 3*1000; //High Wall 3m
 
 };
 

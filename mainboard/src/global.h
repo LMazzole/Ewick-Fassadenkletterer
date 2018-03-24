@@ -1,9 +1,16 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
+
+
 // define constant here
 // const int links = -1;
 // const int rechts = 1;
+
+#define DOWN    (1)
+#define UP     (-1)
+#define LEFT    (1)
+#define RIGHT  (-1)
 
 // // Digitla Pins ==================================
 // #define pinalias  (0)
@@ -34,8 +41,8 @@
 
 //==Digital
 #define testLED (22)
-// #define pinalias  (23)
-// #define pinalias  (24)
+#define WINCH_RELAIS_UP  (23)
+#define WINCH_RELAIS_DOWN  (24)
 // #define pinalias  (25)
 // #define pinalias  (26)
 // #define pinalias  (27)

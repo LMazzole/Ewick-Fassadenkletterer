@@ -11,21 +11,24 @@
 #include "global.h"
 #include "comm.h"
 #include "drive.h"
-#inlcude "pneumatic.h"
+#include "pneumatic.h"
 #include "winch.h"
 #include "VirtuinoBluetooth.h"
 
 
 Drive drive;
 Communicate bluetooth(Serial1,9600);
+Winch winch;
 
 //=============================================================================================================
 void setup(){
+
   // Overview over the PIN-defines are in global.h
 
   Serial.begin(9600);                // Set serial monitor baud rate
+  Serial.println("Initialise Arduino");
 
-  bluetooth.DEBUG=true;               // set this value TRUE to enable the serial monitor status
+  bluetooth.DEBUG=false;               // set this value TRUE to enable the serial monitor status
 
 
   // Use virtuino.vPinMode instead default pinMode method for digital input or digital output pins.
@@ -33,27 +36,31 @@ void setup(){
    pinMode(LED_BUILTIN, OUTPUT);
    bluetooth.vPinMode(testLED,OUTPUT);
 
-   //== PIN MOTOR====
-   //==UP
+   //== PIN STEPPER====
+   //==LEFT
 
-
-
-   //==DOWN
+   //==RIGTH
 
 
    //== PIN WINCH====
+   //==UP
+   pinMode(WINCH_RELAIS_UP, OUTPUT);
+   //==DOWN
+   pinMode(WINCH_RELAIS_DOWN, OUTPUT);
 
-
-   //== PIN PNEUMATIC
+   //== PIN PNEUMATIC ===
 
 
 }
 
 //=========================================================================================
 void loop(){
-
-bluetooth.run();
+Serial.println("===============Enter Loop===============");
+delay(500);
+// bluetooth.run();
 // drive.test();
 
+winch.test();
 
+delay(5000);
 }
