@@ -5,12 +5,6 @@
 #include "global.h"
 #include "Arduino.h"
 
-// #include <stdio.h>
-// #include <string>
-// #include <iostream>
-
-using namespace std;
-
 class Winch
 {
   public:
@@ -20,17 +14,15 @@ class Winch
     double checkPosition(int distanz, int direction);
     void test();
 
-//Direction
-// UP = -1;
-// DOWN = 1;
-
   private:
     double drivetime =0.0;
     int position = 0;
-    int distanz = 0;
-    const int winchspeed = 4*1000/60; //Winchspeed: 4m/min
+    int distanz = 0.0;
+    const double winchspeed = 4.0*1000.0/60.0; //Winchspeed: 4m/min
     const int min_distanz_Winch = 0; //
     const int max_distanz_Winch = 3*1000; //High Wall 3m
+    const int UP = -1;
+    const int DOWN = 1;
 
 };
 

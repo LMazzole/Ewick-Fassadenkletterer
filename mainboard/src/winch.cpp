@@ -28,9 +28,9 @@ void Winch::drive(int distanz, int direction){
 
 double Winch::convertDistanzTime(int distanz){
   double dTime=0.0;
-  // Serial.println("DB-distanz: " + String(distanz));
+  // Serial.println("DB----distanz: " + String(distanz));
   // Serial.println("DB-winchspeed: " + String(winchspeed));
-  dTime=(abs(distanz)/ winchspeed)*1000; //dTime in ms
+  dTime=round((abs(distanz)/ winchspeed)*1000); //dTime in ms
   Serial.println("Drivetime in ms: " + String(dTime));
   return(dTime);
 }
@@ -64,6 +64,8 @@ void Winch::test(){
   delay(delaytime);
   winch.drive(1000,DOWN);
   delay(delaytime);
+  winch.drive(450,DOWN);
+  delay(delaytime);
   winch.drive(500,DOWN);
   delay(delaytime);
   winch.drive(500,DOWN);
@@ -73,6 +75,8 @@ void Winch::test(){
   winch.drive(500,UP);
   delay(delaytime);
   winch.drive(1000,UP);
+  delay(delaytime);
+  winch.drive(450,UP);
   delay(delaytime);
   winch.drive(500,UP);
   delay(delaytime);
