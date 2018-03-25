@@ -7,8 +7,8 @@
 // const int links = -1;
 // const int rechts = 1;
 
-#define DOWN    (1)
-#define UP     (-1)
+// #define DOWN    (1)
+// #define UP     (-1)
 #define LEFT    (1)
 #define RIGHT  (-1)
 
@@ -40,18 +40,21 @@
 // #define I2C_SCL  (21)
 
 //==Digital
-#define testLED (22)
-#define WINCH_RELAIS_UP  (23)
-#define WINCH_RELAIS_DOWN  (24)
+// #define testLED (22)
+// #define WINCH_RELAIS_UP  (23)
+// #define WINCH_RELAIS_DOWN  (24)
+#define testLED (13)
+#define WINCH_RELAIS_UP  (13)
+#define WINCH_RELAIS_DOWN  (13)
 // #define pinalias  (25)
 // #define pinalias  (26)
 // #define pinalias  (27)
 // #define pinalias  (28)
 // #define pinalias  (29)
 // #define pinalias  (30)
-// #define pinalias  (31)
-// #define pinalias  (32)
-// #define pinalias  (33)
+#define PNEUMATIC_VALVE_OUT  (13)
+#define PNEUMATIC_VALVE_IN  (13)
+#define VACUUM_VALVE  (13)
 // #define pinalias  (34)
 // #define pinalias  (35)
 // #define pinalias  (36)
@@ -79,7 +82,7 @@
 // #define pinalias  (A2)
 // #define pinalias  (A3)
 // #define pinalias  (A4)
-// #define pinalias  (A5)
+#define PNEUMATIC_SENSOR  (A5)
 // #define pinalias  (A6)
 // #define pinalias  (A7)
 // #define pinalias  (A8)

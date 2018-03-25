@@ -19,6 +19,7 @@
 Drive drive;
 Communicate bluetooth(Serial1,9600);
 Winch winch;
+Pneumatic pneumatic;
 
 //=============================================================================================================
 void setup(){
@@ -49,18 +50,22 @@ void setup(){
    pinMode(WINCH_RELAIS_DOWN, OUTPUT);
 
    //== PIN PNEUMATIC ===
-
+   pinMode(VACUUM_VALVE, OUTPUT);
+   pinMode(PNEUMATIC_VALVE_OUT, OUTPUT);
+   pinMode(PNEUMATIC_VALVE_IN, OUTPUT);
+   pinMode(PNEUMATIC_SENSOR, INPUT);
 
 }
 
 //=========================================================================================
 void loop(){
-Serial.println("===============Enter Loop===============");
 delay(500);
+Serial.println("===============Enter Loop===============");
+delay(5000);
 // bluetooth.run();
 // drive.test();
-
-winch.test();
+pneumatic.test();
+// winch.test();
 
 delay(5000);
 }

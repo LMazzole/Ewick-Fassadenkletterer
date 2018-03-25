@@ -53,11 +53,12 @@ double Winch::checkPosition(int distanz, int direction){
 
 
 void Winch::test(){
+  Serial.println("");
+  Serial.println("===Start Winch Test===");
+  Serial.println("");
   Winch winch;
   int delaytime = 200;
-  Serial.println("");
-  Serial.println("===Winch Test===");
-  Serial.println("");
+
   winch.drive(1000,DOWN);
   delay(delaytime);
   winch.drive(500,DOWN);
