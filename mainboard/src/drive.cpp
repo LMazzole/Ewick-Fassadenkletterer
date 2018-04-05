@@ -1,27 +1,43 @@
-/*
- * drive.cpp
- *
- *  Created on: 08.03.2018
- *      Author: Luca
- */
-
+#include <Stepper.h>
 #include "drive.h"
-//#include <Serial.h>
 
-Drive::Drive(){
+Stepper Steppermotor_UPSTAIRS(TREIBER_1_PIN_1,TREIBER_1_PIN_2,TREIBER_1_PIN_3,TREIBER_1_PIN_4);
+
+Stepper Steppermotor_DONWSTAIRS(TREIBER_2_PIN_1,TREIBER_2_PIN_2,TREIBER_2_PIN_3,TREIBER_2_PIN_4);
+
+Drive::Drive(){}
+
+void Steppermotor_UPSTAIRS::Step(int steps, int direction,int motorspeed)
+{
+          if (direction == LEFT){
+          motor.setSpeed(motorspeed);
+          motor.step(steps);
+          }
+          else{
+          motor.setSpeed(motorspeed);
+          motor.step(-1*steps);
+          }
 }
 
+void Steppermotor_DOWNSTAIRS::Step(int steps, int direction,int motorspeed)
+{
+          if (direction == LEFT){
+          motor.setSpeed(motorspeed);
+          motor.step(steps);
+          }
+          else{
+          motor.setSpeed(motorspeed);
+          motor.step(-1*steps);
+          }
+}
 
 void Drive::test(){
-  for (int i = 0; i < 5; i++) {
-    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-     delay(50);                       // wait for a second
-     digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-     delay(50);
-  }
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-   delay(2000);                       // wait for a second
-   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-   delay(2000);
-
+Serial.println("");
+  Serial.println("===Start Drive Test===");
+  Serial.println("");
+  
+  void Steppermotor_UPSTAIRS.Step(20,1,20);
+  delay(20000);
+  void Steppermotor_DOWNSTAIRS.Step(20,1,20);
+  delay(20000);
 }

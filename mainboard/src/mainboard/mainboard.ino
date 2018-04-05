@@ -38,16 +38,10 @@ void setup(){
    bluetooth.vPinMode(testLED,OUTPUT);
 
    //== PIN STEPPER====
-   //==UPSTAIRS
-   pinMode(TREIBER_1_PIN_1);
-   pinMode(TREIBER_1_PIN_2);
-   pinMode(TREIBER_1_PIN_3);
-   pinMode(TREIBER_1_PIN_4);
-   //==DOWNSTAIRS
-   pinMode(TREIBER_2_PIN_1);
-   pinMode(TREIBER_2_PIN_2);
-   pinMode(TREIBER_2_PIN_3);
-   pinMode(TREIBER_2_PIN_4);
+   //==LEFT
+
+   //==RIGTH
+
 
    //== PIN WINCH====
    //==UP
