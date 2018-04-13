@@ -9,8 +9,8 @@
 
 // #define DOWN    (1)
 // #define UP     (-1)
-#define LEFT    (1)
-#define RIGHT  (-1)
+//#define LEFT    (1)
+//#define RIGHT  (-1)
 
 // // Digitla Pins ==================================
 // #define pinalias  (0)
@@ -21,7 +21,7 @@
 // #define pinalias  (4)
 // #define pinalias  (5)
 // #define pinalias  (6)
-// #define pinalias  (7)
+#define DRIVER_1_STEP  (7)
 // #define pinalias  (8)
 // #define pinalias  (9)
 // #define pinalias  (10)
@@ -49,7 +49,7 @@
 // #define pinalias  (25)
 // #define pinalias  (26)
 // #define pinalias  (27)
-// #define pinalias  (28)
+#define DRIVER_1_DIR  (28)
 // #define pinalias  (29)
 // #define pinalias  (30)
 #define PNEUMATIC_VALVE_OUT  (13)

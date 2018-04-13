@@ -39,15 +39,17 @@ void setup(){
 
    //== PIN STEPPER====
    //==UPSTAIRS
-   pinMode(TREIBER_1_PIN_1);
-   pinMode(TREIBER_1_PIN_2);
-   pinMode(TREIBER_1_PIN_3);
-   pinMode(TREIBER_1_PIN_4);
+   pinMode(DRIVER_1_DIR, OUTPUT);
+   pinMode(DRIVER_1_STEP, OUTPUT);
+   // pinMode(DRIVER_1_DIR, OUTPUT);
+   //pinMode(TREIBER_1_PIN_2);
+   //pinMode(TREIBER_1_PIN_3);
+   //pinMode(TREIBER_1_PIN_4);
    //==DOWNSTAIRS
-   pinMode(TREIBER_2_PIN_1);
-   pinMode(TREIBER_2_PIN_2);
-   pinMode(TREIBER_2_PIN_3);
-   pinMode(TREIBER_2_PIN_4);
+   //pinMode(TREIBER_2_PIN_1);
+   //pinMode(TREIBER_2_PIN_2);
+   //pinMode(TREIBER_2_PIN_3);
+   //pinMode(TREIBER_2_PIN_4);
 
    //== PIN WINCH====
    //==UP
@@ -67,11 +69,11 @@ void setup(){
 void loop(){
 delay(500);
 Serial.println("===============Enter Loop===============");
-delay(5000);
+// delay(5000);
 // bluetooth.run();
-// drive.test();
-pneumatic.test();
+drive.test();
+// pneumatic.test();
 // winch.test();
 
-delay(5000);
+// delay(5000);
 }

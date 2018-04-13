@@ -14,15 +14,16 @@
 
 class Drive
 {
-  private:
-    void Step(int steps, int direction, int motorspeed);
-    void test();
-    
+
   public:
     Drive();
+    // void Step(int steps, int direction, int motorspeed);
+    void test();
+
+  private:
+
     const int RIGHT = 1;
     const int LEFT = -1;
-    
 };
 
 
