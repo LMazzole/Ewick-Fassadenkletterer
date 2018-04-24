@@ -25,7 +25,7 @@ class Drive
     int speedTop=0;
     int stepCountBottom = 0;
     int speedBottom =0;
-    const int stepsPerRevolution 200;
+    const int stepsPerRevolution = 200;
     const int RIGHT = 1;
     const int LEFT = 0;
     const float sin3[157]={ 0.000,
