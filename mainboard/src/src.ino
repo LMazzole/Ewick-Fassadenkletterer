@@ -57,6 +57,7 @@ void setup(){
    //==DOWN
    pinMode(WINCH_RELAIS_DOWN, OUTPUT);
 
+
    //== PIN PNEUMATIC ===
    pinMode(VACUUM_VALVE, OUTPUT);
    pinMode(PNEUMATIC_VALVE_OUT, OUTPUT);
