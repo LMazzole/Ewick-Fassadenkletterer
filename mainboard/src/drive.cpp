@@ -6,6 +6,49 @@
 // Stepper Steppermotor_DONWSTAIRS(TREIBER_2_PIN_1,TREIBER_2_PIN_2,TREIBER_2_PIN_3,TREIBER_2_PIN_4);
 
 Drive::Drive(){
+
+}
+
+void Drive::DriveFlo(double driveDistance){
+
+  for(int i=0; i <= CalculationDistanceToSteps(driveDistance); i++ ){
+    digitalWrite(12, HIGH);
+    digitalWrite(13, HIGH);
+    delay(CalculationDelay());
+    digitalWrite(12, LOW);
+    digitalWrite(13, LOW);
+    delay(CalculationDelay());
+  }
+
+}
+
+void Drive::AccelorationFlo(){
+  
+}
+
+int Drive::CalculationDistanceToSteps(double distance){
+  int steps;
+  double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
+  double umfangReibrad = 2*Pi()*durchmesserReibrad;
+  double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
+
+  steps = distance/wegProMotorumdrehung*stepsPerRevolution;
+
+  return steps;
+}
+
+int Drive::CalculationDelay(){
+  int neededDelay;
+
+  double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
+  double umfangReibrad = 2*Pi()*durchmesserReibrad;
+  double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
+  double wegProMotorstep = wegProMotorumdrehung/stepsPerRevolution;
+
+  double stepsPerSeconds = wegProMotorstep/(speed*1000);
+  neededDelay = 1000000/stepsPerSeconds/2;
+
+  return neededDelay;
 }
 
 // void Steppermotor_UPSTAIRS::Step(int steps, int direction,int motorspeed)
