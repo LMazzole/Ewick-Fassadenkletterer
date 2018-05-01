@@ -1,5 +1,6 @@
 // #include <Stepper.h>
 #include "drive.h"
+#include <math.h>
 
 // Stepper Steppermotor_UPSTAIRS(TREIBER_1_PIN_1,TREIBER_1_PIN_2,TREIBER_1_PIN_3,TREIBER_1_PIN_4);
 
@@ -9,27 +10,44 @@ Drive::Drive(){
 
 }
 
-void Drive::DriveFlo(double driveDistance){
+void Drive::DriveFlo(double driveDistance, int direction){
+  if (direction == 1){
+    digitalWrite(DRIVER_1_DIR, HIGH);
+    digitalWrite(DRIVER_2_DIR, HIGH);
+  }
+  else {
+    digitalWrite(DRIVER_1_DIR, LOW);
+    digitalWrite(DRIVER_2_DIR, LOW);
+  }
 
   for(int i=0; i <= CalculationDistanceToSteps(driveDistance); i++ ){
-    digitalWrite(12, HIGH);
-    digitalWrite(13, HIGH);
+    digitalWrite(DRIVER_1_STEP, HIGH);
+    digitalWrite(DRIVER_2_STEP, HIGH);
     delay(CalculationDelay());
-    digitalWrite(12, LOW);
-    digitalWrite(13, LOW);
+    digitalWrite(DRIVER_1_STEP, LOW);
+    digitalWrite(DRIVER_2_STEP, LOW);
     delay(CalculationDelay());
   }
 
 }
 
 void Drive::AccelorationFlo(){
-  
+
+    for(int i = 157; sin3[i] >= CalculationDelay(); i--) {
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delay(sin3[i]*100000);
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delay(sin3[i]*100000);
+    }
+    
 }
 
 int Drive::CalculationDistanceToSteps(double distance){
   int steps;
   double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
-  double umfangReibrad = 2*Pi()*durchmesserReibrad;
+  double umfangReibrad = 2*M_PI*durchmesserReibrad;
   double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
 
   steps = distance/wegProMotorumdrehung*stepsPerRevolution;
@@ -41,11 +59,11 @@ int Drive::CalculationDelay(){
   int neededDelay;
 
   double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
-  double umfangReibrad = 2*Pi()*durchmesserReibrad;
+  double umfangReibrad = 2*M_PI*durchmesserReibrad;
   double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
   double wegProMotorstep = wegProMotorumdrehung/stepsPerRevolution;
 
-  double stepsPerSeconds = wegProMotorstep/(speed*1000);
+  double stepsPerSeconds = wegProMotorstep/(maxSpeed*1000);
   neededDelay = 1000000/stepsPerSeconds/2;
 
   return neededDelay;

@@ -21,8 +21,9 @@ class Drive
     void test();
     int CalculationDistanceToSteps(double distance); // distance in mm
     int CalculationDelay();
-    void DriveFlo(double distance); //distance in mm
-    
+    void DriveFlo(double distance, int direction); //distance in mm
+    void AccelorationFlo();
+
   private:
     //int stepCountTop = 0;
     //int speedTop=0;
@@ -32,9 +33,10 @@ class Drive
     const double durchmesserZahnradAn = 24.0;
     const double durchmesserZahnradAb = 77.0;
     const double durchmesserReibrad = 90.0;
-    const double speed = 4; // speed [m/s]
-    const int RIGHT = 1;
-    const int LEFT = 0;
+    const double maxSpeed = 0.01; // speed [m/s]
+    const double accelorationTime = 5; // [s]
+    //const int RIGHT = 1;
+    //const int LEFT = 0;
     const float sin3[157]={ 0.000,
                             0.000,
                             0.000,

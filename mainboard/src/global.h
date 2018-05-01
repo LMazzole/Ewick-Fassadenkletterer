@@ -50,6 +50,11 @@
 // #define pinalias  (26)
 // #define pinalias  (27)
 #define DRIVER_1_DIR  (28)
+#define DRIVER_1_STEP  (29)
+#define DRIVER_2_DIR (30)
+#define DRIVER_2_STEP (31)
+const int driveRight = 1;
+const int driveLeft = 0;
 // #define pinalias  (29)
 // #define pinalias  (30)
 #define PNEUMATIC_VALVE_OUT  (13)
