@@ -60,6 +60,7 @@ void Winch::startDriving(bool status){
   else{
     digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
     // digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
+     Winch::directionDriving(0);
   }
 }
 void Winch::directionDriving(int direction){

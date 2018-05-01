@@ -4,6 +4,11 @@
 
 
 // define constant here
+const int UP = 1;
+const int DOWN = 0;
+const int driveRight = 1;
+const int driveLeft = 0;
+
 // const int links = -1;
 // const int rechts = 1;
 
@@ -55,8 +60,6 @@
 #define DRIVER_1_STEP  (29)
 #define DRIVER_2_DIR (52)
 #define DRIVER_2_STEP (53)
-const int driveRight = 1;
-const int driveLeft = 0;
 // #define pinalias  (29)
 // #define pinalias  (30)
 #define PNEUMATIC_VALVE_OUT  (13)
