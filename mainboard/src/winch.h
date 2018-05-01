@@ -23,7 +23,8 @@ class Winch
     const int max_distanz_Winch = 3*1000; //High Wall 3m
     const int UP = -1;
     const int DOWN = 1;
-
+    void startDriving(bool status);
+    void directionDriving(int direction);
 };
 
 

@@ -11,6 +11,7 @@ Drive::Drive(){
 }
 
 void Drive::DriveFlo(double driveDistance, int direction){
+  Serial.println("===============Start Drive===============");
   if (direction == 1){
     digitalWrite(DRIVER_1_DIR, HIGH);
     digitalWrite(DRIVER_2_DIR, HIGH);
@@ -21,18 +22,20 @@ void Drive::DriveFlo(double driveDistance, int direction){
   }
 
   for(int i=0; i <= CalculationDistanceToSteps(driveDistance); i++ ){
+
     digitalWrite(DRIVER_1_STEP, HIGH);
     digitalWrite(DRIVER_2_STEP, HIGH);
-    delay(CalculationDelay());
+    delay(10);
     digitalWrite(DRIVER_1_STEP, LOW);
     digitalWrite(DRIVER_2_STEP, LOW);
-    delay(CalculationDelay());
+    delay(10);
   }
+
 
 }
 
 void Drive::AccelorationFlo(){
-
+  // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
     for(int i = 157; sin3[i] >= CalculationDelay(); i--) {
       digitalWrite(DRIVER_1_STEP, HIGH);
       digitalWrite(DRIVER_2_STEP, HIGH);
@@ -41,10 +44,11 @@ void Drive::AccelorationFlo(){
       digitalWrite(DRIVER_2_STEP, LOW);
       delay(sin3[i]*100000);
     }
-    
+
 }
 
 int Drive::CalculationDistanceToSteps(double distance){
+  Serial.println("===============Start CalculationDistancetoSteps===============");
   int steps;
   double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
   double umfangReibrad = 2*M_PI*durchmesserReibrad;
@@ -55,16 +59,20 @@ int Drive::CalculationDistanceToSteps(double distance){
   return steps;
 }
 
-int Drive::CalculationDelay(){
-  int neededDelay;
-
+double Drive::CalculationDelay(){
+  double neededDelay;
+Serial.println("===============Start CalculationDelay===============");
   double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
   double umfangReibrad = 2*M_PI*durchmesserReibrad;
   double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
   double wegProMotorstep = wegProMotorumdrehung/stepsPerRevolution;
 
   double stepsPerSeconds = wegProMotorstep/(maxSpeed*1000);
-  neededDelay = 1000000/stepsPerSeconds/2;
+  Serial.println("===============Start Variable stepsPerSeconds===============");
+  Serial.println(stepsPerSeconds);
+  neededDelay = 1/stepsPerSeconds/2;
+  Serial.println("===============Start Variable neededDelay===============");
+  Serial.println(neededDelay);
 
   return neededDelay;
 }

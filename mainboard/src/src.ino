@@ -41,6 +41,8 @@ void setup(){
    //==UPSTAIRS
    pinMode(DRIVER_1_DIR, OUTPUT);
    pinMode(DRIVER_1_STEP, OUTPUT);
+   pinMode(DRIVER_2_DIR, OUTPUT);
+   pinMode(DRIVER_2_STEP, OUTPUT);
    // pinMode(DRIVER_1_DIR, OUTPUT);
    //pinMode(TREIBER_1_PIN_2);
    //pinMode(TREIBER_1_PIN_3);
@@ -53,9 +55,11 @@ void setup(){
 
    //== PIN WINCH====
    //==UP
-   pinMode(WINCH_RELAIS_UP, OUTPUT);
+   pinMode(WINCH_RELAIS_UP_1, OUTPUT);
+   pinMode(WINCH_RELAIS_UP_2, OUTPUT);
    //==DOWN
-   pinMode(WINCH_RELAIS_DOWN, OUTPUT);
+   pinMode(WINCH_RELAIS_DOWN_1, OUTPUT);
+   pinMode(WINCH_RELAIS_DOWN_2, OUTPUT);
 
 
    //== PIN PNEUMATIC ===
@@ -73,11 +77,9 @@ Serial.println("===============Enter Loop===============");
 // delay(5000);
 // bluetooth.run();
 //drive.test();
-//drive.DriveFlo(100, driveRight);
-//drive.DriveFlo(100, driveLeft);
+Serial.println("===============Start===============");
+drive.DriveFlo(100, driveRight);
 // pneumatic.test();
 // winch.test();
-int x = drive.CalculationDistanceToSteps(200);
-Serial.println(x);
-// delay(5000);
+delay(5000);
 }

@@ -11,15 +11,17 @@ void Winch::drive(int distanz, int direction){
     drivetime = convertDistanzTime(distanz);
   if (direction == DOWN){
       Serial.println("Direction: DOWN");
-      digitalWrite(WINCH_RELAIS_DOWN, HIGH);
+      Winch::startDriving(true);
+      Winch::directionDriving(DOWN);
       delay(drivetime);
-      digitalWrite(WINCH_RELAIS_DOWN, LOW);
+      startDriving(false);
   }
   else{
       Serial.println("Direction: UP");
-      digitalWrite(WINCH_RELAIS_UP, HIGH);
+      Winch::startDriving(true);
+      Winch::directionDriving(UP);
       delay(drivetime);
-      digitalWrite(WINCH_RELAIS_UP, LOW);
+      startDriving(false);
   }
 
   Serial.println("Endposition in mm: " + String(position));
@@ -50,37 +52,58 @@ double Winch::checkPosition(int distanz, int direction){
     return distanz;
 }
 
-
+void Winch::startDriving(bool status){
+  if (status){
+    digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
+    // digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
+  }
+  else{
+    digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
+    // digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
+  }
+}
+void Winch::directionDriving(int direction){
+  if (direction){
+    // digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
+    digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
+  }
+  else{
+    // digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
+    digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
+  }
+}
 
 void Winch::test(){
-  Serial.println("");
-  Serial.println("===Start Winch Test===");
-  Serial.println("");
+  //Serial.println("");
+  //Serial.println("===Start Winch Test===");
+  //Serial.println("");
   Winch winch;
-  int delaytime = 200;
+  //int delaytime = 200;
 
-  winch.drive(1000,DOWN);
-  delay(delaytime);
-  winch.drive(500,DOWN);
-  delay(delaytime);
-  winch.drive(1000,DOWN);
-  delay(delaytime);
-  winch.drive(450,DOWN);
-  delay(delaytime);
-  winch.drive(500,DOWN);
-  delay(delaytime);
-  winch.drive(500,DOWN);
-  Serial.println("----------");
-  winch.drive(1000,UP);
-  delay(delaytime);
-  winch.drive(500,UP);
-  delay(delaytime);
-  winch.drive(1000,UP);
-  delay(delaytime);
-  winch.drive(450,UP);
-  delay(delaytime);
-  winch.drive(500,UP);
-  delay(delaytime);
-  winch.drive(500,UP);
-  delay(delaytime);
+winch.drive(100, DOWN);
+delay(2000);
+  //winch.drive(1000,DOWN);
+  //delay(delaytime);
+  //winch.drive(500,DOWN);
+  //delay(delaytime);
+  //winch.drive(1000,DOWN);
+  //delay(delaytime);
+  //winch.drive(450,DOWN);
+  //delay(delaytime);
+  //winch.drive(500,DOWN);
+  //delay(delaytime);
+  //winch.drive(500,DOWN);
+  //Serial.println("----------");
+  //winch.drive(1000,UP);
+  //delay(delaytime);
+  //winch.drive(500,UP);
+  //delay(delaytime);
+  //winch.drive(1000,UP);
+  //delay(delaytime);
+  //winch.drive(450,UP);
+  //delay(delaytime);
+  //winch.drive(500,UP);
+  //delay(delaytime);
+  //winch.drive(500,UP);
+  //delay(delaytime);
 }

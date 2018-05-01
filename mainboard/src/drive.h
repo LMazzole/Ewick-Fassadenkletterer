@@ -20,7 +20,7 @@ class Drive
     // void Step(int steps, int direction, int motorspeed);
     void test();
     int CalculationDistanceToSteps(double distance); // distance in mm
-    int CalculationDelay();
+    double CalculationDelay();
     void DriveFlo(double distance, int direction); //distance in mm
     void AccelorationFlo();
 
