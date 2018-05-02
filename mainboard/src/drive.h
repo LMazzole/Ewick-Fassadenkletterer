@@ -11,6 +11,7 @@
 
 #include "global.h"
 #include "Arduino.h"
+#include <math.h>
 
 class Drive
 {
@@ -20,9 +21,9 @@ class Drive
     // void Step(int steps, int direction, int motorspeed);
     void test();
     int CalculationDistanceToSteps(double distance); // distance in mm
-    double CalculationDelay();
     void DriveFlo(double distance, int direction); //distance in mm
     void AccelorationFlo();
+    void SlowDownFlo();
 
   private:
     //int stepCountTop = 0;
@@ -33,10 +34,10 @@ class Drive
     const double durchmesserZahnradAn = 24.0;
     const double durchmesserZahnradAb = 77.0;
     const double durchmesserReibrad = 90.0;
-    const double maxSpeed = 0.01; // speed [m/s]
-    const double accelorationTime = 5; // [s]
-    //const int RIGHT = 1;
-    //const int LEFT = 0;
+    const double maxSpeed = 0.2; // speed [m/s]
+    const double wegProMotorumdrehung = 2*M_PI*durchmesserReibrad*(durchmesserZahnradAn/durchmesserZahnradAb);
+    const unsigned long neededDelay = 1000/((wegProMotorumdrehung/stepsPerRevolution)/(maxSpeed*1000))/2;
+    const int accelorationFaktor = 2;
     const float sin3[157]={ 0.000,
                             0.000,
                             0.000,

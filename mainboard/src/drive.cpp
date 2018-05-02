@@ -11,70 +11,67 @@ Drive::Drive(){
 }
 
 void Drive::DriveFlo(double driveDistance, int direction){
+
   Serial.println("===============Start Drive===============");
-  if (direction == 1){
-    digitalWrite(DRIVER_1_DIR, HIGH);
-    digitalWrite(DRIVER_2_DIR, HIGH);
-  }
-  else {
-    digitalWrite(DRIVER_1_DIR, LOW);
-    digitalWrite(DRIVER_2_DIR, LOW);
-  }
+  Serial.println("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
+  Serial.println("Durchmesser Zahnrad Ab:" + char(durchmesserZahnradAb));
+  Serial.println("Durchmesser Reibrad:" + char(durchmesserReibrad));
+  Serial.println("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
+  Serial.println("Reisegeschwindigkeit:" + char(maxSpeed));
+  Serial.println("Zurückgelegter Weg pro Motorumdrehung:" + char(wegProMotorumdrehung));
+  Serial.println("Delay in Milliseconds:" + char(neededDelay));
 
-  for(int i=0; i <= CalculationDistanceToSteps(driveDistance); i++ ){
+  delay(20000);
 
+  digitalWrite(DRIVER_1_DIR, direction); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+  digitalWrite(DRIVER_2_DIR, direction); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+
+  int neededSteps = CalculationDistanceToSteps(driveDistance)-(2*157);
+
+  AccelorationFlo();
+
+  for(int i=0; i <= neededSteps;  i++ ){
     digitalWrite(DRIVER_1_STEP, HIGH);
     digitalWrite(DRIVER_2_STEP, HIGH);
-    delay(10);
+    delay(neededDelay);
     digitalWrite(DRIVER_1_STEP, LOW);
     digitalWrite(DRIVER_2_STEP, LOW);
-    delay(10);
+    delay(neededDelay);
   }
 
+  SlowDownFlo();
 
 }
 
 void Drive::AccelorationFlo(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
-    for(int i = 157; sin3[i] >= CalculationDelay(); i--) {
+    for(int i = 0; i == 156; i++) {
       digitalWrite(DRIVER_1_STEP, HIGH);
       digitalWrite(DRIVER_2_STEP, HIGH);
-      delay(sin3[i]*100000);
+      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
       digitalWrite(DRIVER_1_STEP, LOW);
       digitalWrite(DRIVER_2_STEP, LOW);
-      delay(sin3[i]*100000);
+      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
     }
+}
 
+void Drive::SlowDownFlo(){
+  // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
+    for(int i = 156; i == 0; i--) {
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+    }
 }
 
 int Drive::CalculationDistanceToSteps(double distance){
   Serial.println("===============Start CalculationDistancetoSteps===============");
-  int steps;
-  double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
-  double umfangReibrad = 2*M_PI*durchmesserReibrad;
-  double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
-
-  steps = distance/wegProMotorumdrehung*stepsPerRevolution;
-
+  int steps = distance/wegProMotorumdrehung*stepsPerRevolution;
+  Serial.println("Anzahl ausgerechnete Steps:" + char(steps));
   return steps;
-}
-
-double Drive::CalculationDelay(){
-  double neededDelay;
-Serial.println("===============Start CalculationDelay===============");
-  double verhaeltnisZahnrad = durchmesserZahnradAn/durchmesserZahnradAb;
-  double umfangReibrad = 2*M_PI*durchmesserReibrad;
-  double wegProMotorumdrehung = umfangReibrad*verhaeltnisZahnrad;
-  double wegProMotorstep = wegProMotorumdrehung/stepsPerRevolution;
-
-  double stepsPerSeconds = wegProMotorstep/(maxSpeed*1000);
-  Serial.println("===============Start Variable stepsPerSeconds===============");
-  Serial.println(stepsPerSeconds);
-  neededDelay = 1/stepsPerSeconds/2;
-  Serial.println("===============Start Variable neededDelay===============");
-  Serial.println(neededDelay);
-
-  return neededDelay;
 }
 
 // void Steppermotor_UPSTAIRS::Step(int steps, int direction,int motorspeed)
