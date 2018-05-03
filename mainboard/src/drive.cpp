@@ -43,6 +43,7 @@ void Drive::DriveFlo(double driveDistance, int direction){
 
 }
 
+
 void Drive::AccelorationFlo(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
     for(int i = 0; i == 156; i++) {
@@ -54,6 +55,7 @@ void Drive::AccelorationFlo(){
       delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
     }
 }
+
 
 void Drive::SlowDownFlo(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))

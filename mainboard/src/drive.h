@@ -37,7 +37,7 @@ class Drive
     const double maxSpeed = 0.2; // speed [m/s]
     const double wegProMotorumdrehung = 2*M_PI*durchmesserReibrad*(durchmesserZahnradAn/durchmesserZahnradAb);
     const unsigned long neededDelay = 1000/((wegProMotorumdrehung/stepsPerRevolution)/(maxSpeed*1000))/2;
-    const int accelorationFaktor = 2;
+    const int accelorationFaktor = 5;
     const float sin3[157]={ 0.000,
                             0.000,
                             0.000,
