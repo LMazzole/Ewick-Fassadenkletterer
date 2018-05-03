@@ -14,11 +14,11 @@ void Pneumatic::cylinderout(){
   vacuumcup(false);
   Serial.println("       PNEUMATIC_VALVE_OUT, HIGH");
   digitalWrite(PNEUMATIC_VALVE_OUT, HIGH);
-  delay(time_cylinder_offout);
+  delay(time_cylinder_offout); //Start Vaccum after delay
   vacuumcup(true);
   while (!vacuumstatus()) {
     vacuumsensor= vacuumsensor + 10; //just for testing
-    delay(5);
+    delay(50); //Pollingrate
   }
   vacuumsensor=0; //just for testing
   Serial.println("       PNEUMATIC_VALVE_OUT, LOW");
