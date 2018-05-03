@@ -11,17 +11,17 @@ void Winch::drive(int distanz, int direction){
     drivetime = convertDistanzTime(distanz);
   if (direction == DOWN){
       Serial.println("Direction: DOWN");
-      Winch::startDriving(true);
-      Winch::directionDriving(DOWN);
+      driving(true);
+      directionDriving(DOWN);
       delay(drivetime);
-      startDriving(false);
+      driving(false);
   }
   else{
       Serial.println("Direction: UP");
-      Winch::startDriving(true);
-      Winch::directionDriving(UP);
+      driving(true);
+      directionDriving(UP);
       delay(drivetime);
-      startDriving(false);
+      driving(false);
   }
 
   Serial.println("Endposition in mm: " + String(position));
@@ -52,24 +52,24 @@ double Winch::checkPosition(int distanz, int direction){
     return distanz;
 }
 
-void Winch::startDriving(bool status){
+void Winch::driving(bool status){
   if (status){
     digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
-    // digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
+    digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
   }
   else{
     digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
-    // digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
-     Winch::directionDriving(0);
+    digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
+     directionDriving(0);
   }
 }
 void Winch::directionDriving(int direction){
   if (direction){
-    // digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
+    digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
     digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
   }
   else{
-    // digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
+    digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
     digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
   }
 }
