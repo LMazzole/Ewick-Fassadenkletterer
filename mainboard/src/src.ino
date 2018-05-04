@@ -83,6 +83,19 @@ Serial.println("===============Enter Loop===============");
 // drive.DriveFlo(100, driveRight);
 // pneumatic.test();
 // winch.test();
+// if(Serial.available()){                        //Send commands over serial to play
+//   switch(Serial.read()){
+//     case '1': audio.play("1.wav");
+//     break;
+//     case '=': audio.volume(1);
+//     break;          //Increase volume by 1
+//     case '-': audio.volume(0);
+//     break;          //Decrease volume by 1
+//     case 'S': audio.stopPlayback();
+//     break;     //Stop all playback
+//   }
+// }
+
 int direction = UP;
 digitalWrite(DRIVER_1_DIR, HIGH);
 digitalWrite(DRIVER_2_DIR, HIGH);
