@@ -2,78 +2,74 @@
 #include "winch.h"
 
 Winch::Winch(){
-
 }
 
 void Winch::drive(int distanz, int direction){
-    Serial.println("Startposition in mm: " + String(position));
+    DEBUG_PRINTLN("Startposition in mm: " + String(position));
     distanz=checkPosition(distanz,direction);
     drivetime = convertDistanzTime(distanz);
   if (direction == DOWN){
-      Serial.println("Direction: DOWN");
-      driving(true);
-      directionDriving(DOWN);
+      DEBUG_PRINTLN("Direction: DOWN");
+      driveDown(true);
       delay(drivetime);
-      driving(false);
+      driveDown(false);
   }
   else{
-      Serial.println("Direction: UP");
-      driving(true);
-      directionDriving(UP);
+      DEBUG_PRINTLN("Direction: UP");
+      driveUp(true);
       delay(drivetime);
-      driving(false);
+      driveUp(false);
   }
-
-  Serial.println("Endposition in mm: " + String(position));
-  Serial.println("");
+  DEBUG_PRINTLN("Endposition in mm: " + String(position));
+  DEBUG_PRINTLN("");
 }
 
 double Winch::convertDistanzTime(int distanz){
   double dTime=0.0;
-  // Serial.println("DB----distanz: " + String(distanz));
-  // Serial.println("DB-winchspeed: " + String(winchspeed));
   dTime=round((abs(distanz)/ winchspeed)*1000); //dTime in ms
-  Serial.println("Drivetime in ms: " + String(dTime));
+  DEBUG_PRINTLN("Drivetime in ms: " + String(dTime));
   return(dTime);
 }
 
 double Winch::checkPosition(int distanz, int direction){
   if ((position+distanz) > max_distanz_Winch && direction == DOWN){
       distanz = max_distanz_Winch-position;
-      Serial.println("Max. Distanz reached: " + String(max_distanz_Winch));
+    DEBUG_PRINTLN("Max. Distanz reached: " + String(max_distanz_Winch));
   }
   else if ((position-distanz) < min_distanz_Winch && direction== UP){
     distanz = position-min_distanz_Winch;
-    Serial.println("Min. Distanz reached: " + String(min_distanz_Winch));
+    DEBUG_PRINTLN("Min. Distanz reached: " + String(min_distanz_Winch));
   }
 
-    Serial.println("Distanz: " + String(distanz));
+    DEBUG_PRINTLN("Distanz: " + String(distanz));
     position=position+(distanz*direction);
     return distanz;
 }
 
-void Winch::driving(bool status){
-  if (status){
+void Winch::driveDown(bool status){
+  if (status) {
+    DEBUG_PRINTLN("driveDown() activ");
+    driveUp(false);
     digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
     digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
-  }
-  else{
-    digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
-    digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
-     directionDriving(0);
-  }
-}
-void Winch::directionDriving(int direction){
-  if (direction){
-    digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
-    digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
-  }
-  else{
+  } else {
+    DEBUG_PRINTLN("driveDown() inactiv");
     digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
     digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
   }
 }
-
+void Winch::driveUp(bool status){
+  if (status) {
+    DEBUG_PRINTLN("driveUp() activ");
+    driveDown(false);
+    digitalWrite(WINCH_RELAIS_UP_1, HIGH);
+    digitalWrite(WINCH_RELAIS_UP_2, HIGH);
+  } else {
+    DEBUG_PRINTLN("driveUp() inactiv");
+    digitalWrite(WINCH_RELAIS_UP_1, LOW);
+    digitalWrite(WINCH_RELAIS_UP_2, LOW);
+  }
+}
 void Winch::test(){
   //Serial.println("");
   //Serial.println("===Start Winch Test===");
