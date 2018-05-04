@@ -73,8 +73,8 @@ void setup(){
 
 //=========================================================================================
 void loop(){
-delay(500);
-Serial.println("===============Enter Loop===============");
+// delay(500);
+// Serial.println("===============Enter Loop===============");
 
 // delay(5000);
 // bluetooth.run();
@@ -83,48 +83,71 @@ Serial.println("===============Enter Loop===============");
 // drive.DriveFlo(100, driveRight);
 // pneumatic.test();
 // winch.test();
-// if(Serial.available()){                        //Send commands over serial to play
-//   switch(Serial.read()){
-//     case '1': audio.play("1.wav");
-//     break;
-//     case '=': audio.volume(1);
-//     break;          //Increase volume by 1
-//     case '-': audio.volume(0);
-//     break;          //Decrease volume by 1
-//     case 'S': audio.stopPlayback();
-//     break;     //Stop all playback
-//   }
+
+int stepdelay= 1000/100;
+
+if(Serial.available()){                        //Send commands over serial to play
+  switch(Serial.read()){
+    case '1':
+    Serial.println("DOWN");
+    digitalWrite(DRIVER_1_DIR, HIGH);
+    digitalWrite(DRIVER_2_DIR, HIGH);
+    for (size_t i = 0; i <800; i++) {
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delay(stepdelay);
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delay(stepdelay);
+    }
+    Serial.println("DOWN-Finished");
+    break;
+    case '2':
+    Serial.println("UP");
+    digitalWrite(DRIVER_1_DIR, LOW);
+    digitalWrite(DRIVER_2_DIR, LOW);
+    for (size_t i = 0; i <800; i++) {
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delay(stepdelay);
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delay(stepdelay);
+    }
+    Serial.println("UP-Finished");
+    break;
+  }
+}
+
+// int direction = UP;
+// digitalWrite(DRIVER_1_DIR, HIGH);
+// digitalWrite(DRIVER_2_DIR, HIGH);
+// direction=DOWN;
+// Serial.println("DOWN");
+//
+// int stepdelay= 1000/50;
+// for (size_t i = 0; i <400; i++) {
+//   // Serial.println("Step: "+i);
+//   digitalWrite(DRIVER_1_STEP, HIGH);
+//   digitalWrite(DRIVER_2_STEP, HIGH);
+//   delay(stepdelay);
+//   digitalWrite(DRIVER_1_STEP, LOW);
+//   digitalWrite(DRIVER_2_STEP, LOW);
+//   delay(stepdelay);
 // }
-
-int direction = UP;
-digitalWrite(DRIVER_1_DIR, HIGH);
-digitalWrite(DRIVER_2_DIR, HIGH);
-direction=DOWN;
-Serial.println("DOWN");
-
-int stepdelay= 1000/50;
-for (size_t i = 0; i <400; i++) {
-  // Serial.println("Step: "+i);
-  digitalWrite(DRIVER_1_STEP, HIGH);
-  digitalWrite(DRIVER_2_STEP, HIGH);
-  delay(stepdelay);
-  digitalWrite(DRIVER_1_STEP, LOW);
-  digitalWrite(DRIVER_2_STEP, LOW);
-  delay(stepdelay);
-}
-delay(1000);
-digitalWrite(DRIVER_1_DIR, LOW);
-digitalWrite(DRIVER_2_DIR, LOW);
-direction=UP;
-Serial.println("UP");
-for (size_t i = 0; i <400; i++) {
-  // Serial.println("Step: "+i);
-  digitalWrite(DRIVER_1_STEP, HIGH);
-  digitalWrite(DRIVER_2_STEP, HIGH);
-  delay(stepdelay);
-  digitalWrite(DRIVER_1_STEP, LOW);
-  digitalWrite(DRIVER_2_STEP, LOW);
-  delay(stepdelay);
-}
-delay(3000);
+// delay(1000);
+// digitalWrite(DRIVER_1_DIR, LOW);
+// digitalWrite(DRIVER_2_DIR, LOW);
+// direction=UP;
+// Serial.println("UP");
+// for (size_t i = 0; i <400; i++) {
+//   // Serial.println("Step: "+i);
+//   digitalWrite(DRIVER_1_STEP, HIGH);
+//   digitalWrite(DRIVER_2_STEP, HIGH);
+//   delay(stepdelay);
+//   digitalWrite(DRIVER_1_STEP, LOW);
+//   digitalWrite(DRIVER_2_STEP, LOW);
+//   delay(stepdelay);
+// }
+// delay(3000);
 }
