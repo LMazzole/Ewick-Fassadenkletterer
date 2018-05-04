@@ -6,8 +6,8 @@
 // define constant here
 const int UP = 1;
 const int DOWN = 0;
-const bool driveRight = 1;
-const bool driveLeft = 0;
+const bool RIGHT = 1;
+const bool LEFT = 0;
 
 // const int links = -1;
 // const int rechts = 1;
