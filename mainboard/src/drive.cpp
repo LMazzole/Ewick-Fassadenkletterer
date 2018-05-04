@@ -59,7 +59,7 @@ void Drive::AccelorationFlo(){
 
 void Drive::SlowDownFlo(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
-    for(int i = 156; i == 0; i--) {
+    for(int i = 156; i >= 0; i--) {
       digitalWrite(DRIVER_1_STEP, HIGH);
       digitalWrite(DRIVER_2_STEP, HIGH);
       delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
