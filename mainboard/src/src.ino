@@ -16,7 +16,7 @@
 #include "VirtuinoBluetooth.h"
 #include "debug.h"
 
-#define DEBUG
+#define MYDEBUG
 
 Drive drive;
 Communicate bluetooth(Serial1,9600);
@@ -64,7 +64,7 @@ void setup(){
    pinMode(WINCH_RELAIS_DOWN_2, OUTPUT);
 
 
-   //== PIN PNEUMATIC ===
+   //==PIN PNEUMATIC ===
    pinMode(VACUUM_VALVE, OUTPUT);
    pinMode(PNEUMATIC_VALVE_OUT, OUTPUT);
    pinMode(PNEUMATIC_VALVE_IN, OUTPUT);
