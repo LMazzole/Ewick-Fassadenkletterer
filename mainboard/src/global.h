@@ -52,7 +52,7 @@ const bool driveLeft = 0;
 #define WINCH_RELAIS_UP_1  (22)
 #define WINCH_RELAIS_UP_2  (22)
 #define WINCH_RELAIS_DOWN_1  (50)
-#define WINCH_RELAIS_DOWN_2  (22)
+#define WINCH_RELAIS_DOWN_2  (50)
 // #define pinalias  (25)
 // #define pinalias  (26)
 // #define pinalias  (27)

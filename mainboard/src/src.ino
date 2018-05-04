@@ -67,19 +67,49 @@ void setup(){
    pinMode(PNEUMATIC_VALVE_OUT, OUTPUT);
    pinMode(PNEUMATIC_VALVE_IN, OUTPUT);
    pinMode(PNEUMATIC_SENSOR, INPUT);
-
 }
 
 //=========================================================================================
 void loop(){
 delay(500);
 Serial.println("===============Enter Loop===============");
+
 // delay(5000);
 // bluetooth.run();
 //drive.test();
-Serial.println("===============Start===============");
-drive.DriveFlo(100, driveRight);
+// Serial.println("===============Start===============");
+// drive.DriveFlo(100, driveRight);
 // pneumatic.test();
 // winch.test();
-delay(5000);
+int direction = UP;
+digitalWrite(DRIVER_1_DIR, HIGH);
+digitalWrite(DRIVER_2_DIR, HIGH);
+direction=DOWN;
+Serial.println("DOWN");
+
+int stepdelay= 1000/50;
+for (size_t i = 0; i <400; i++) {
+  // Serial.println("Step: "+i);
+  digitalWrite(DRIVER_1_STEP, HIGH);
+  digitalWrite(DRIVER_2_STEP, HIGH);
+  delay(stepdelay);
+  digitalWrite(DRIVER_1_STEP, LOW);
+  digitalWrite(DRIVER_2_STEP, LOW);
+  delay(stepdelay);
+}
+delay(1000);
+digitalWrite(DRIVER_1_DIR, LOW);
+digitalWrite(DRIVER_2_DIR, LOW);
+direction=UP;
+Serial.println("UP");
+for (size_t i = 0; i <400; i++) {
+  // Serial.println("Step: "+i);
+  digitalWrite(DRIVER_1_STEP, HIGH);
+  digitalWrite(DRIVER_2_STEP, HIGH);
+  delay(stepdelay);
+  digitalWrite(DRIVER_1_STEP, LOW);
+  digitalWrite(DRIVER_2_STEP, LOW);
+  delay(stepdelay);
+}
+delay(3000);
 }
