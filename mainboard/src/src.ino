@@ -14,7 +14,9 @@
 #include "pneumatic.h"
 #include "winch.h"
 #include "VirtuinoBluetooth.h"
+#include "debug.h"
 
+#define DEBUG
 
 Drive drive;
 Communicate bluetooth(Serial1,9600);

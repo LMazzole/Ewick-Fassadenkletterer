@@ -12,6 +12,7 @@
 #include "global.h"
 #include "Arduino.h"
 #include <math.h>
+#include "debug.h"
 
 class Drive
 {

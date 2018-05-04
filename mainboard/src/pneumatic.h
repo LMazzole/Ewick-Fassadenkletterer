@@ -4,6 +4,7 @@
 
 #include "global.h"
 #include "Arduino.h"
+#include "debug.h"
 
 class Pneumatic
 {

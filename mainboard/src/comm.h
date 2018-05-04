@@ -5,6 +5,7 @@
 #include "global.h"
 #include "Arduino.h"
 #include "VirtuinoBluetooth.h"
+#include "debug.h"
 
 class Communicate : public VirtuinoBluetooth
 {
