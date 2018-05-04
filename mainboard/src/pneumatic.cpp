@@ -5,14 +5,14 @@ Pneumatic::Pneumatic(){
 }
 
 void Pneumatic::cylinderout(){
-  Serial.println("Cylinder out");
+  DEBUG_PRINTLN("Cylinder out");
   if (!status_cylinder_in) { // Check if Cylinder is already out
-    Serial.println("Cylinder is already out!");
+    DEBUG_PRINTLN("Cylinder is already out!");
     return;
   }
 
   vacuumcup(false);
-  Serial.println("       PNEUMATIC_VALVE_OUT, HIGH");
+  DEBUG_PRINTLN("       PNEUMATIC_VALVE_OUT, HIGH");
   digitalWrite(PNEUMATIC_VALVE_OUT, HIGH);
   delay(time_cylinder_offout); //Start Vaccum after delay
   vacuumcup(true);
@@ -21,58 +21,58 @@ void Pneumatic::cylinderout(){
     delay(50); //Pollingrate
   }
   vacuumsensor=0; //just for testing
-  Serial.println("       PNEUMATIC_VALVE_OUT, LOW");
+  DEBUG_PRINTLN("       PNEUMATIC_VALVE_OUT, LOW");
   digitalWrite(PNEUMATIC_VALVE_OUT, LOW);
-  Serial.println("Cylinder out: Stopped");
+  DEBUG_PRINTLN("Cylinder out: Stopped");
   status_cylinder_in=false;
 }
 
 void Pneumatic::cylinderin(){
-  Serial.println("Cylinder in");
+  DEBUG_PRINTLN("Cylinder in");
   if (status_cylinder_in) { // Check if Cylinder is already in
-    Serial.println("Cylinder is already in!");
+    DEBUG_PRINTLN("Cylinder is already in!");
     return;
   }
 
   vacuumcup(false);
-  Serial.println("       PNEUMATIC_VALVE_IN, HIGH");
+  DEBUG_PRINTLN("       PNEUMATIC_VALVE_IN, HIGH");
   digitalWrite(PNEUMATIC_VALVE_IN, HIGH);
   delay(time_cylinder_in);
-    Serial.println("       PNEUMATIC_VALVE_IN, LOW");
+    DEBUG_PRINTLN("       PNEUMATIC_VALVE_IN, LOW");
   digitalWrite(PNEUMATIC_VALVE_IN, LOW);
   status_cylinder_in=true;
 }
 
 void Pneumatic::vacuumcup(boolean status_cup){
-  Serial.print("Vacuumcup: ");
+  DEBUG_PRINT("Vacuumcup: ");
   if(status_cup){
-    Serial.println("ACTIV");
+    DEBUG_PRINTLN("ACTIV");
     digitalWrite(VACUUM_VALVE, HIGH);
   }
   else{
-    Serial.println("INACTIV");
+    DEBUG_PRINTLN("INACTIV");
     digitalWrite(VACUUM_VALVE, LOW);
   }
   delay(500); //Give vacuum time to activate/deactivate
 }
 
 boolean Pneumatic::vacuumstatus(){
-  Serial.print("Vacuumstatus: ");
+  DEBUG_PRINT("Vacuumstatus: ");
   // vacuumsensor= digitalRead(PNEUMATIC_SENSOR);
   if (vacuumsensor > vacuumsensor_upper){
-    Serial.println("TRUE " + String(vacuumsensor));
+    DEBUG_PRINTLN("TRUE " + String(vacuumsensor));
     return(true);
   }
   else{
-    Serial.println("FALSE " + String(vacuumsensor));
+    DEBUG_PRINTLN("FALSE " + String(vacuumsensor));
     return(false);
   }
 }
 
 void Pneumatic::test(){
-  Serial.println(" ");
-  Serial.println("===Start Pneumatic Test===");
-  Serial.println(" ");
+  DEBUG_PRINTLN(" ");
+  DEBUG_PRINTLN("===Start Pneumatic Test===");
+  DEBUG_PRINTLN(" ");
   Pneumatic pneumatic;
   int delaytime = 200;
   pneumatic.cylinderin();

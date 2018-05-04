@@ -12,14 +12,14 @@ Drive::Drive(){
 
 void Drive::DriveFlo(double driveDistance, int direction){
 
-  Serial.println("===============Start Drive===============");
-  Serial.println("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
-  Serial.println("Durchmesser Zahnrad Ab:" + char(durchmesserZahnradAb));
-  Serial.println("Durchmesser Reibrad:" + char(durchmesserReibrad));
-  Serial.println("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
-  Serial.println("Reisegeschwindigkeit:" + char(maxSpeed));
-  Serial.println("Zurückgelegter Weg pro Motorumdrehung:" + char(wegProMotorumdrehung));
-  Serial.println("Delay in Milliseconds:" + char(neededDelay));
+  DEBUG_PRINTLN("===============Start Drive===============");
+  DEBUG_PRINTLN("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
+  DEBUG_PRINTLN("Durchmesser Zahnrad Ab:" + char(durchmesserZahnradAb));
+  DEBUG_PRINTLN("Durchmesser Reibrad:" + char(durchmesserReibrad));
+  DEBUG_PRINTLN("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
+  DEBUG_PRINTLN("Reisegeschwindigkeit:" + char(maxSpeed));
+  DEBUG_PRINTLN("Zurückgelegter Weg pro Motorumdrehung:" + char(wegProMotorumdrehung));
+  DEBUG_PRINTLN("Delay in Milliseconds:" + char(neededDelay));
 
   delay(20000);
 
@@ -70,9 +70,9 @@ void Drive::SlowDownFlo(){
 }
 
 int Drive::CalculationDistanceToSteps(double distance){
-  Serial.println("===============Start CalculationDistancetoSteps===============");
+  DEBUG_PRINTLN("===============Start CalculationDistancetoSteps===============");
   int steps = distance/wegProMotorumdrehung*stepsPerRevolution;
-  Serial.println("Anzahl ausgerechnete Steps:" + char(steps));
+  DEBUG_PRINTLN("Anzahl ausgerechnete Steps:" + char(steps));
   return steps;
 }
 
@@ -101,8 +101,8 @@ int Drive::CalculationDistanceToSteps(double distance){
 // }
 
 void Drive::test(){
-Serial.println("");
-  Serial.println("===Start Drive Test===");
+DEBUG_PRINTLN("");
+  DEBUG_PRINTLN("===Start Drive Test===");
 
   while (digitalRead(50)==LOW) {
   }
