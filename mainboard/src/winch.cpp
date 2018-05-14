@@ -8,13 +8,13 @@ void Winch::drive(int distanz, int direction){
     DEBUG_PRINTLN("Startposition in mm: " + String(position));
     distanz=checkPosition(distanz,direction);
     drivetime = convertDistanzTime(distanz);
-  if (direction == DOWN){
+  if (direction == DOWN && drivetime != 0){
       DEBUG_PRINTLN("Direction: DOWN");
       driveDown(true);
       delay(drivetime);
       driveDown(false);
   }
-  else{
+  else if (direction == UP && drivetime != 0){
       DEBUG_PRINTLN("Direction: UP");
       driveUp(true);
       delay(drivetime);
@@ -48,28 +48,52 @@ double Winch::checkPosition(int distanz, int direction){
 
 void Winch::driveDown(bool status){
   if (status) {
-    DEBUG_PRINTLN("driveDown() activ");
-    driveUp(false);
-    digitalWrite(WINCH_RELAIS_DOWN_1, HIGH);
-    digitalWrite(WINCH_RELAIS_DOWN_2, HIGH);
-  } else {
-    DEBUG_PRINTLN("driveDown() inactiv");
-    digitalWrite(WINCH_RELAIS_DOWN_1, LOW);
-    digitalWrite(WINCH_RELAIS_DOWN_2, LOW);
+    DEBUG_PRINTLN("driveDown()");
+    if (!directionDown) {
+      changeDirStatus();
+    }
+    if (!statusDriving) {
+      changeDriveStatus();
+    }
   }
 }
 void Winch::driveUp(bool status){
   if (status) {
-    DEBUG_PRINTLN("driveUp() activ");
-    driveDown(false);
-    digitalWrite(WINCH_RELAIS_UP_1, HIGH);
-    digitalWrite(WINCH_RELAIS_UP_2, HIGH);
-  } else {
-    DEBUG_PRINTLN("driveUp() inactiv");
-    digitalWrite(WINCH_RELAIS_UP_1, LOW);
-    digitalWrite(WINCH_RELAIS_UP_2, LOW);
+    DEBUG_PRINTLN("driveUp()");
+    if (directionDown) {
+      changeDirStatus();
+    }
+    if (!statusDriving) {
+      changeDriveStatus();
+    }
   }
 }
+
+void Winch::changeDriveStatus(){
+  DEBUG_PRINTLN("changeDriveStatus()");
+  if (!statusDriving)
+  statusDriving=true;
+  else
+  statusDriving=false;
+
+  digitalWrite(WINCH_RELAIS_ON,HIGH);
+  delay(20);
+  digitalWrite(WINCH_RELAIS_ON,LOW);
+}
+
+void Winch::changeDirStatus(){
+  DEBUG_PRINTLN("changeDirStatus()");
+  if (!directionDown)
+  statusDriving=true;
+  else
+  statusDriving=false;
+
+  digitalWrite(WINCH_RELAIS_DIR,HIGH);
+  delay(20);
+  digitalWrite(WINCH_RELAIS_DIR,LOW);
+  delay(50);
+}
+
 void Winch::test(){
   //Serial.println("");
   //Serial.println("===Start Winch Test===");
@@ -79,6 +103,7 @@ void Winch::test(){
 
 winch.drive(100, DOWN);
 delay(2000);
+winch.drive(100, UP);
   //winch.drive(1000,DOWN);
   //delay(delaytime);
   //winch.drive(500,DOWN);
