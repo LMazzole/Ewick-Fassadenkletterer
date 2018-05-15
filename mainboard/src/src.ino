@@ -57,8 +57,10 @@ void setup(){
 
    //== PIN WINCH====
    //==UP
-   pinMode(WINCH_RELAIS_ON, OUTPUT);
-   pinMode(WINCH_RELAIS_DIR, OUTPUT);
+   pinMode(WINCH_RELAIS_ON_POS, OUTPUT);
+   pinMode(WINCH_RELAIS_ON_NEG, OUTPUT);
+   pinMode(WINCH_RELAIS_DIR_POS, OUTPUT);
+   pinMode(WINCH_RELAIS_DIR_NEG, OUTPUT);
 
 
    //==PIN PNEUMATIC ===

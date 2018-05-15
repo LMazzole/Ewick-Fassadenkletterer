@@ -8,17 +8,12 @@ void Winch::drive(int distanz, int direction){
     DEBUG_PRINTLN("Startposition in mm: " + String(position));
     distanz=checkPosition(distanz,direction);
     drivetime = convertDistanzTime(distanz);
-  if (direction == DOWN && drivetime != 0){
-      DEBUG_PRINTLN("Direction: DOWN");
-      driveDown(true);
+    DEBUG_PRINT("Direction 1=UP,0=Down : ");
+    DEBUG_PRINTLN(direction);
+  if (drivetime != 0){
+      driveDirection(direction);
       delay(drivetime);
-      driveDown(false);
-  }
-  else if (direction == UP && drivetime != 0){
-      DEBUG_PRINTLN("Direction: UP");
-      driveUp(true);
-      delay(drivetime);
-      driveUp(false);
+      drivePowerOn(false);
   }
   DEBUG_PRINTLN("Endposition in mm: " + String(position));
   DEBUG_PRINTLN("");
@@ -46,52 +41,42 @@ double Winch::checkPosition(int distanz, int direction){
     return distanz;
 }
 
-void Winch::driveDown(bool status){
+void Winch::drivePowerOn(bool status){
   if (status) {
-    DEBUG_PRINTLN("driveDown()");
-    if (!directionDown) {
-      changeDirStatus();
-    }
-    if (!statusDriving) {
-      changeDriveStatus();
-    }
+    DEBUG_PRINT("drivePoweron(): ");
+    DEBUG_PRINTLN(status);
+    digitalWrite(WINCH_RELAIS_ON_POS, HIGH);
+    digitalWrite(WINCH_RELAIS_ON_NEG, LOW);
+    delay(50);
+    digitalWrite(WINCH_RELAIS_ON_POS, LOW);
   }
-}
-void Winch::driveUp(bool status){
-  if (status) {
-    DEBUG_PRINTLN("driveUp()");
-    if (directionDown) {
-      changeDirStatus();
-    }
-    if (!statusDriving) {
-      changeDriveStatus();
-    }
+  else{
+    DEBUG_PRINT("drivePoweron(): ");
+    DEBUG_PRINTLN(status);
+    digitalWrite(WINCH_RELAIS_ON_POS, LOW);
+    digitalWrite(WINCH_RELAIS_ON_NEG, HIGH);
+    delay(50);
+    digitalWrite(WINCH_RELAIS_ON_NEG, LOW);
   }
 }
 
-void Winch::changeDriveStatus(){
-  DEBUG_PRINTLN("changeDriveStatus()");
-  if (!statusDriving)
-  statusDriving=true;
-  else
-  statusDriving=false;
-
-  digitalWrite(WINCH_RELAIS_ON,HIGH);
-  delay(20);
-  digitalWrite(WINCH_RELAIS_ON,LOW);
-}
-
-void Winch::changeDirStatus(){
-  DEBUG_PRINTLN("changeDirStatus()");
-  if (!directionDown)
-  statusDriving=true;
-  else
-  statusDriving=false;
-
-  digitalWrite(WINCH_RELAIS_DIR,HIGH);
-  delay(20);
-  digitalWrite(WINCH_RELAIS_DIR,LOW);
-  delay(50);
+void Winch::driveDirection(int direction){
+  DEBUG_PRINT("driveDirection(): ");
+  DEBUG_PRINTLN(direction);
+  drivePowerOn(false);
+  delay(200);
+  if (direction == DOWN) {
+    digitalWrite(WINCH_RELAIS_DIR_POS, HIGH);
+    digitalWrite(WINCH_RELAIS_DIR_NEG, LOW);
+    delay(50);
+    digitalWrite(WINCH_RELAIS_DIR_POS, LOW);
+  } else if (direction == UP) {
+    digitalWrite(WINCH_RELAIS_DIR_NEG, HIGH);
+    digitalWrite(WINCH_RELAIS_DIR_POS, LOW);
+    delay(50);
+    digitalWrite(WINCH_RELAIS_DIR_NEG, LOW);
+  }
+  drivePowerOn(true);
 }
 
 void Winch::test(){
