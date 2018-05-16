@@ -27,21 +27,19 @@ void Drive::printDouble(double val, unsigned int precision){
 
 
 void Drive::DriveFlo(double driveDistance, int direction){
-  Drive drive;
-
   Serial.print("===============Start Drive===============\n");
     Serial.print("Durchmesser Zahnrad An: \n");
-    drive.printDouble(durchmesserZahnradAn,10);
+    printDouble(durchmesserZahnradAn,10);
     Serial.print("Durchmesser Zahnrad Ab: \n");
-    drive.printDouble(durchmesserZahnradAb,10);
+    printDouble(durchmesserZahnradAb,10);
     Serial.print("Durchmesser Reibrad: \n");
-    drive.printDouble(durchmesserReibrad,10);
+    printDouble(durchmesserReibrad,10);
     Serial.print("Reisegeschwindigkeit: \n");
-    drive.printDouble(maxSpeed,10);
+    printDouble(maxSpeed,10);
     Serial.print("Zurückgelegter Weg pro Motorumdrehung: \n");
-    drive.printDouble(wegProMotorumdrehung,10);
+    printDouble(wegProMotorumdrehung,10);
     Serial.print("Delay in Milliseconds: \n");
-    drive.printDouble(neededDelay,10);
+    printDouble(neededDelay,10);
 
   delay(20000);
 
@@ -53,7 +51,7 @@ void Drive::DriveFlo(double driveDistance, int direction){
   int neededSteps = CalculationDistanceToSteps(driveDistance)-(2*157);
   Serial.print("Berechnung Steps \n");
   Serial.print("Benötigte Steps: \n");
-  drive.printDouble(neededSteps,10);
+  printDouble(neededSteps,10);
   //drive.AccelorationFlo();
 
   for(int i=0; i <= neededSteps;  i++ ){
