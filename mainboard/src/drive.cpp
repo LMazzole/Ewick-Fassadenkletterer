@@ -10,25 +10,51 @@ Drive::Drive(){
 
 }
 
-void Drive::DriveFlo(double driveDistance, int direction){
+void Drive::printDouble(double val, unsigned int precision){
+// prints val with number of decimal places determine by precision
+// NOTE: precision is 1 followed by the number of zeros for the desired number of decimial places
+// example: printDouble( 3.1415, 100); // prints 3.14 (two decimal places)
 
-  DEBUG_PRINTLN("===============Start Drive===============");
-  DEBUG_PRINTLN("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
-  DEBUG_PRINTLN("Durchmesser Zahnrad Ab:" + char(durchmesserZahnradAb));
-  DEBUG_PRINTLN("Durchmesser Reibrad:" + char(durchmesserReibrad));
-  DEBUG_PRINTLN("Durchmesser Zahnrad An:" + char(durchmesserZahnradAn));
-  DEBUG_PRINTLN("Reisegeschwindigkeit:" + char(maxSpeed));
-  DEBUG_PRINTLN("Zurückgelegter Weg pro Motorumdrehung:" + char(wegProMotorumdrehung));
-  DEBUG_PRINTLN("Delay in Milliseconds:" + char(neededDelay));
+   Serial.print(int(val));  //prints the int part
+   Serial.print("."); // print the decimal point
+   unsigned int frac;
+   if(val >= 0)
+       frac = (val - int(val)) * precision;
+   else
+       frac = (int(val)- val ) * precision;
+   Serial.println(frac,DEC);
+}
+
+
+void Drive::DriveFlo(double driveDistance, int direction){
+  Drive drive;
+
+  Serial.print("===============Start Drive===============\n");
+    Serial.print("Durchmesser Zahnrad An: \n");
+    drive.printDouble(durchmesserZahnradAn,10);
+    Serial.print("Durchmesser Zahnrad Ab: \n");
+    drive.printDouble(durchmesserZahnradAb,10);
+    Serial.print("Durchmesser Reibrad: \n");
+    drive.printDouble(durchmesserReibrad,10);
+    Serial.print("Reisegeschwindigkeit: \n");
+    drive.printDouble(maxSpeed,10);
+    Serial.print("Zurückgelegter Weg pro Motorumdrehung: \n");
+    drive.printDouble(wegProMotorumdrehung,10);
+    Serial.print("Delay in Milliseconds: \n");
+    drive.printDouble(neededDelay,10);
 
   delay(20000);
 
-  digitalWrite(DRIVER_1_DIR, direction); //Geht das? Direction ist boolean und somit entweder 0 oder 1
-  digitalWrite(DRIVER_2_DIR, direction); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+  Serial.print("Set Direction \n");
+  digitalWrite(DRIVER_1_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+  digitalWrite(DRIVER_2_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
 
+  Serial.print("Berechnung Steps \n");
   int neededSteps = CalculationDistanceToSteps(driveDistance)-(2*157);
-
-  AccelorationFlo();
+  Serial.print("Berechnung Steps \n");
+  Serial.print("Benötigte Steps: \n");
+  drive.printDouble(neededSteps,10);
+  //drive.AccelorationFlo();
 
   for(int i=0; i <= neededSteps;  i++ ){
     digitalWrite(DRIVER_1_STEP, HIGH);
@@ -39,7 +65,7 @@ void Drive::DriveFlo(double driveDistance, int direction){
     delay(neededDelay);
   }
 
-  SlowDownFlo();
+  //drive.SlowDownFlo();
 
 }
 

@@ -1,6 +1,9 @@
 //http://www.kramann.info/96_Arduino/24_OOP/index.php
 //https://github.com/HSR-Stud/Willkommen
 
+#define MYDEBUG
+
+
 /* Includes */
 #include "Arduino.h"
 #include <Wire.h>
@@ -15,8 +18,6 @@
 #include "winch.h"
 #include "VirtuinoBluetooth.h"
 #include "debug.h"
-
-#define MYDEBUG
 
 Drive drive;
 Communicate bluetooth(Serial1,9600);
@@ -89,16 +90,17 @@ if(Serial.available()){                        //Send commands over serial to pl
   switch(Serial.read()){
     case '1':
     Serial.println("DOWN");
-    digitalWrite(DRIVER_1_DIR, HIGH);
-    digitalWrite(DRIVER_2_DIR, HIGH);
-    for (size_t i = 0; i <800; i++) {
-      digitalWrite(DRIVER_1_STEP, HIGH);
-      digitalWrite(DRIVER_2_STEP, HIGH);
-      delay(stepdelay);
-      digitalWrite(DRIVER_1_STEP, LOW);
-      digitalWrite(DRIVER_2_STEP, LOW);
-      delay(stepdelay);
-    }
+    drive.DriveFlo(100, 1);
+    //digitalWrite(DRIVER_1_DIR, HIGH);
+    //digitalWrite(DRIVER_2_DIR, HIGH);
+    //for (size_t i = 0; i <800; i++) {
+      //digitalWrite(DRIVER_1_STEP, HIGH);
+      //digitalWrite(DRIVER_2_STEP, HIGH);
+      //delay(stepdelay);
+      //digitalWrite(DRIVER_1_STEP, LOW);
+      //digitalWrite(DRIVER_2_STEP, LOW);
+      //delay(stepdelay);
+    //}
     Serial.println("DOWN-Finished");
     break;
     case '2':

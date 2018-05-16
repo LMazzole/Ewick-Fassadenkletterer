@@ -25,6 +25,7 @@ class Drive
     void DriveFlo(double distance, int direction); //distance in mm
     void AccelorationFlo();
     void SlowDownFlo();
+    void printDouble( double val, unsigned int precision);
 
   private:
     //int stepCountTop = 0;
