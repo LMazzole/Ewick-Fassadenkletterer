@@ -27,32 +27,32 @@ void Drive::printDouble(double val, unsigned int precision){
 
 
 void Drive::DriveFlo(double driveDistance, int direction){
-  Serial.print("===============Start Drive===============\n");
-    Serial.print("Durchmesser Zahnrad An: \n");
+    Serial.println("===============Start Drive===============");
+    Serial.println("Durchmesser Zahnrad An:");
     printDouble(durchmesserZahnradAn,10);
-    Serial.print("Durchmesser Zahnrad Ab: \n");
+    Serial.println("Durchmesser Zahnrad Ab:");
     printDouble(durchmesserZahnradAb,10);
-    Serial.print("Durchmesser Reibrad: \n");
+    Serial.println("Durchmesser Reibrad:");
     printDouble(durchmesserReibrad,10);
-    Serial.print("Reisegeschwindigkeit: \n");
+    Serial.println("Reisegeschwindigkeit:");
     printDouble(maxSpeed,10);
-    Serial.print("Zurückgelegter Weg pro Motorumdrehung: \n");
+    Serial.println("Zurückgelegter Weg pro Motorumdrehung: \n");
     printDouble(wegProMotorumdrehung,10);
-    Serial.print("Delay in Milliseconds: \n");
+    Serial.println("Delay in Milliseconds:");
     printDouble(neededDelay,10);
 
   delay(20000);
 
-  Serial.print("Set Direction \n");
+  Serial.println("Set Direction");
   digitalWrite(DRIVER_1_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
   digitalWrite(DRIVER_2_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
 
-  Serial.print("Berechnung Steps \n");
-  int neededSteps = CalculationDistanceToSteps(driveDistance)-(2*157);
-  Serial.print("Berechnung Steps \n");
-  Serial.print("Benötigte Steps: \n");
+  Serial.println("Berechnung Steps");
+  double neededSteps = CalculationDistanceToSteps(driveDistance)-(2*157);
+  Serial.println("Benötigte Steps:");
   printDouble(neededSteps,10);
-  //drive.AccelorationFlo();
+
+  //AccelorationFlo();
 
   for(int i=0; i <= neededSteps;  i++ ){
     digitalWrite(DRIVER_1_STEP, HIGH);
@@ -63,7 +63,7 @@ void Drive::DriveFlo(double driveDistance, int direction){
     delay(neededDelay);
   }
 
-  //drive.SlowDownFlo();
+  //SlowDownFlo();
 
 }
 
@@ -93,10 +93,9 @@ void Drive::SlowDownFlo(){
     }
 }
 
-int Drive::CalculationDistanceToSteps(double distance){
-  DEBUG_PRINTLN("===============Start CalculationDistancetoSteps===============");
-  int steps = distance/wegProMotorumdrehung*stepsPerRevolution;
-  DEBUG_PRINTLN("Anzahl ausgerechnete Steps:" + char(steps));
+double Drive::CalculationDistanceToSteps(double distance){
+  Serial.println("===============Start CalculationDistancetoSteps===============");
+  double steps = distance/wegProMotorumdrehung*stepsPerRevolution;
   return steps;
 }
 

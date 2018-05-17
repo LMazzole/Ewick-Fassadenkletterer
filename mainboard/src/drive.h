@@ -21,11 +21,11 @@ class Drive
     Drive();
     // void Step(int steps, int direction, int motorspeed);
     void test();
-    int CalculationDistanceToSteps(double distance); // distance in mm
+    double CalculationDistanceToSteps(double distance); // distance in mm
     void DriveFlo(double distance, int direction); //distance in mm
     void AccelorationFlo();
     void SlowDownFlo();
-    void printDouble( double val, unsigned int precision);
+    void printDouble(double val, unsigned int precision);
 
   private:
     //int stepCountTop = 0;
@@ -37,7 +37,7 @@ class Drive
     const double durchmesserZahnradAb = 77.0;
     const double durchmesserReibrad = 90.0;
     const double maxSpeed = 0.2; // speed [m/s]
-    const double wegProMotorumdrehung = 2*M_PI*durchmesserReibrad*(durchmesserZahnradAn/durchmesserZahnradAb);
+    const double wegProMotorumdrehung = M_PI*durchmesserReibrad*(durchmesserZahnradAn/durchmesserZahnradAb);
     const unsigned long neededDelay = 1000/((wegProMotorumdrehung/stepsPerRevolution)/(maxSpeed*1000))/2;
     const int accelorationFaktor = 5;
     const float sin3[157]={ 0.000,
