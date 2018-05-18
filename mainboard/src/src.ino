@@ -90,7 +90,9 @@ if(Serial.available()){                        //Send commands over serial to pl
   switch(Serial.read()){
     case '1':
     Serial.println("DOWN");
-    drive.DriveFlo(400, 1);
+    //double frequenz = 30;
+    //tone(DRIVER_1_STEP, frequenz);
+    drive.Driving(500, 1);
     //digitalWrite(DRIVER_1_DIR, HIGH);
     //digitalWrite(DRIVER_2_DIR, HIGH);
     //for (size_t i = 0; i <800; i++) {

@@ -41,50 +41,59 @@ void Drive::Driving(double driveDistance, int direction){
     Serial.println("Delay in Milliseconds:");
     printDouble(neededDelay,10);
 
-  delay(20000);
+  delay(5000);
 
   Serial.println("Set Direction");
-  digitalWrite(DRIVER_1_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
-  digitalWrite(DRIVER_2_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
-
-  unsigned long neededSteps = CalculationDistanceToSteps(driveDistance)-(2*157);
+  if (direction == 1){
+    digitalWrite(DRIVER_1_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+    digitalWrite(DRIVER_2_DIR, HIGH); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+  }
+  else if (direction == 0){
+    digitalWrite(DRIVER_1_DIR, LOW); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+    digitalWrite(DRIVER_2_DIR, LOW); //Geht das? Direction ist boolean und somit entweder 0 oder 1
+  }
+  unsigned long neededSteps = CalculationDistanceToSteps(driveDistance);
   Serial.println("Benötigte Steps:");
   printDouble(neededSteps,10);
 
-  Acceloration();
+  Serial.println("==================Anfahren Start===========================");
+
+//    for(int i = 0; i <= 156; i++) {
+  //    Serial.println("Delay = ");
+    //  printDouble(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]),10);
+
+    //  digitalWrite(DRIVER_1_STEP, HIGH);
+    //  digitalWrite(DRIVER_2_STEP, HIGH);
+    //  delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+    //  digitalWrite(DRIVER_1_STEP, LOW);
+    //  digitalWrite(DRIVER_2_STEP, LOW);
+    //  delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+    //}
+  Serial.println("==================Anfahren Ende===========================");
 
   Serial.println("==================Fahren Start===========================");
+  printDouble(neededDelay,10);
   for(unsigned long i=0; i <= neededSteps;  i++){
+
+    //Serial.println("Delay = ");
+    //printDouble(neededDelay,10);
     digitalWrite(DRIVER_1_STEP, HIGH);
     digitalWrite(DRIVER_2_STEP, HIGH);
-    delay(neededDelay);
+    delayMicroseconds(neededDelay);
     digitalWrite(DRIVER_1_STEP, LOW);
     digitalWrite(DRIVER_2_STEP, LOW);
-    delay(neededDelay);
+    delayMicroseconds(neededDelay);
   }
   Serial.println("==================Fahren Ende===========================");
 
-  SlowDown();
+//SlowDown();
 
 }
 
 
-void Drive::Acceloration(){
+void Drive::Acceleration(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
-  Serial.println("==================Anfahren Start===========================");
 
-    for(int i = 0; i == 156; i++) {
-      Serial.println("Delay = ");
-      printDouble(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]),10);
-
-      digitalWrite(DRIVER_1_STEP, HIGH);
-      digitalWrite(DRIVER_2_STEP, HIGH);
-      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
-      digitalWrite(DRIVER_1_STEP, LOW);
-      digitalWrite(DRIVER_2_STEP, LOW);
-      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
-    }
-  Serial.println("==================Anfahren Ende===========================");
 }
 
 
@@ -108,7 +117,7 @@ void Drive::SlowDown(){
 long Drive::CalculationDistanceToSteps(double distance){
   Serial.println("===============Start Berechung Steps===============");
   unsigned long steps = distance/wegProMotorumdrehung*stepsPerRevolution;
-  return steps;
+  return steps*16;
   Serial.println("===============Start Berechung Steps===============");
 }
 
