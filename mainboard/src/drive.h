@@ -8,6 +8,7 @@
 #ifndef DRIVE_H_
 #define DRIVE_H_
 
+#define MYDEBUG
 
 #include "global.h"
 #include "Arduino.h"
