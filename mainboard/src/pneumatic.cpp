@@ -17,10 +17,9 @@ void Pneumatic::cylinderout(){
   delay(time_cylinder_offout); //Start Vaccum after delay
   vacuumcup(true);
   while (!vacuumstatus()) {
-    vacuumsensor= vacuumsensor + 10; //just for testing
-    delay(50); //Pollingrate
+    delay(100); //Pollingrate
   }
-  vacuumsensor=0; //just for testing
+    // delay(time_cylinder_in);
   DEBUG_PRINTLN("       PNEUMATIC_VALVE_OUT, LOW");
   digitalWrite(PNEUMATIC_VALVE_OUT, LOW);
   DEBUG_PRINTLN("Cylinder out: Stopped");
@@ -58,7 +57,7 @@ void Pneumatic::vacuumcup(boolean status_cup){
 
 boolean Pneumatic::vacuumstatus(){
   DEBUG_PRINT("Vacuumstatus: ");
-  // vacuumsensor= digitalRead(PNEUMATIC_SENSOR);
+  vacuumsensor= analogRead(PNEUMATIC_SENSOR);
   if (vacuumsensor > vacuumsensor_upper){
     DEBUG_PRINTLN("TRUE " + String(vacuumsensor));
     return(true);
