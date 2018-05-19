@@ -46,15 +46,6 @@ void setup(){
    pinMode(DRIVER_1_STEP, OUTPUT);
    pinMode(DRIVER_2_DIR, OUTPUT);
    pinMode(DRIVER_2_STEP, OUTPUT);
-   // pinMode(DRIVER_1_DIR, OUTPUT);
-   //pinMode(TREIBER_1_PIN_2);
-   //pinMode(TREIBER_1_PIN_3);
-   //pinMode(TREIBER_1_PIN_4);
-   //==DOWNSTAIRS
-   //pinMode(TREIBER_2_PIN_1);
-   //pinMode(TREIBER_2_PIN_2);
-   //pinMode(TREIBER_2_PIN_3);
-   //pinMode(TREIBER_2_PIN_4);
 
    //== PIN WINCH====
    //==UP
@@ -69,88 +60,75 @@ void setup(){
    pinMode(PNEUMATIC_VALVE_OUT, OUTPUT);
    pinMode(PNEUMATIC_VALVE_IN, OUTPUT);
    pinMode(PNEUMATIC_SENSOR, INPUT);
+
+   winch.initialise();
+
+   DEBUG_PRINTLN("Case '1' Drive LEFT 500mm");
+   DEBUG_PRINTLN("Case '2' Drive RIGHT 500mm");
+   DEBUG_PRINTLN("Case '3' Drive DOWN 500mm");
+   DEBUG_PRINTLN("Case '4' Drive UP 500mm");
+   DEBUG_PRINTLN("Case '5' Cylinder Out");
+   DEBUG_PRINTLN("Case '6' Cylinder In");
+   DEBUG_PRINTLN("Case '7' Vaccum Status");
+   DEBUG_PRINTLN("=========================");
 }
 
 //=========================================================================================
 void loop(){
-// delay(500);
-// Serial.println("===============Enter Loop===============");
-
-// delay(5000);
-// bluetooth.run();
-//drive.test();
-// Serial.println("===============Start===============");
-// drive.DriveFlo(100, driveRight);
-// pneumatic.test();
-// winch.test();
-
-int stepdelay= 1000/100;
-
 if(Serial.available()){                        //Send commands over serial to play
   switch(Serial.read()){
     case '1':
-    Serial.println("DOWN");
-    //double frequenz = 30;
-    //tone(DRIVER_1_STEP, frequenz);
-    drive.Driving(500, 1);
-    //digitalWrite(DRIVER_1_DIR, HIGH);
-    //digitalWrite(DRIVER_2_DIR, HIGH);
-    //for (size_t i = 0; i <800; i++) {
-      //digitalWrite(DRIVER_1_STEP, HIGH);
-      //digitalWrite(DRIVER_2_STEP, HIGH);
-      //delay(stepdelay);
-      //digitalWrite(DRIVER_1_STEP, LOW);
-      //digitalWrite(DRIVER_2_STEP, LOW);
-      //delay(stepdelay);
-    //}
-    Serial.println("DOWN-Finished");
-    break;
+      DEBUG_PRINTLN("Case '1' Drive LEFT 500");
+      drive.Driving(500, LEFT);
+      DEBUG_PRINTLN("Case 1: finished");
+      DEBUG_PRINTLN("");
+      break;
     case '2':
-    Serial.println("UP");
-    digitalWrite(DRIVER_1_DIR, LOW);
-    digitalWrite(DRIVER_2_DIR, LOW);
-    for (size_t i = 0; i <800; i++) {
-      digitalWrite(DRIVER_1_STEP, HIGH);
-      digitalWrite(DRIVER_2_STEP, HIGH);
-      delay(stepdelay);
-      digitalWrite(DRIVER_1_STEP, LOW);
-      digitalWrite(DRIVER_2_STEP, LOW);
-      delay(stepdelay);
-    }
-    Serial.println("UP-Finished");
+      DEBUG_PRINTLN("Case '2' Drive RIGHT 500");
+      drive.Driving(500, RIGHT);
+      DEBUG_PRINTLN("Case 2: finished");
+      DEBUG_PRINTLN("");
+      break;
+    case '3':
+      DEBUG_PRINTLN("Case '3' Drive DOWN 500");
+      winch.drive(500,DOWN);
+      DEBUG_PRINTLN("Case 3: finished");
+      DEBUG_PRINTLN("");
     break;
+
+    case'4':
+      DEBUG_PRINTLN("Case '4' Drive UP 500");
+      winch.drive(500,UP);
+      DEBUG_PRINTLN("Case 4: finished");
+      DEBUG_PRINTLN("");
+    break;
+
+    case'5':
+      DEBUG_PRINTLN("Case '5' Cylinder Out");
+      pneumatic.cylinderout();
+      DEBUG_PRINTLN("Case 5: finished");
+      DEBUG_PRINTLN("");
+    break;
+
+    case'6':
+      DEBUG_PRINTLN("Case '6'Cylinder In");
+      pneumatic.cylinderin();
+      DEBUG_PRINTLN("Case 6: finished");
+      DEBUG_PRINTLN("");
+    break;
+
+
+    case'7':
+    for (size_t i = 0; i < 50; i++) {
+      DEBUG_PRINT("Vacuumstatus: ");
+      DEBUG_PRINTLN(analogRead(PNEUMATIC_SENSOR));
+      delay(300);
+    }
+      DEBUG_PRINTLN("Case 7: finished");
+      DEBUG_PRINTLN("");
+    break;
+
   }
 }
 
-// int direction = UP;
-// digitalWrite(DRIVER_1_DIR, HIGH);
-// digitalWrite(DRIVER_2_DIR, HIGH);
-// direction=DOWN;
-// Serial.println("DOWN");
-//
-// int stepdelay= 1000/50;
-// for (size_t i = 0; i <400; i++) {
-//   // Serial.println("Step: "+i);
-//   digitalWrite(DRIVER_1_STEP, HIGH);
-//   digitalWrite(DRIVER_2_STEP, HIGH);
-//   delay(stepdelay);
-//   digitalWrite(DRIVER_1_STEP, LOW);
-//   digitalWrite(DRIVER_2_STEP, LOW);
-//   delay(stepdelay);
-// }
-// delay(1000);
-// digitalWrite(DRIVER_1_DIR, LOW);
-// digitalWrite(DRIVER_2_DIR, LOW);
-// direction=UP;
-// Serial.println("UP");
-// for (size_t i = 0; i <400; i++) {
-//   // Serial.println("Step: "+i);
-//   digitalWrite(DRIVER_1_STEP, HIGH);
-//   digitalWrite(DRIVER_2_STEP, HIGH);
-//   delay(stepdelay);
-//   digitalWrite(DRIVER_1_STEP, LOW);
-//   digitalWrite(DRIVER_2_STEP, LOW);
-//   delay(stepdelay);
-// }
-// delay(3000);
 }
