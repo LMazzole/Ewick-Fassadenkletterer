@@ -1,6 +1,7 @@
 #ifndef WINCH_H_
 #define WINCH_H_
 
+#define MYDEBUG
 
 #include "global.h"
 #include "Arduino.h"
@@ -10,6 +11,7 @@ class Winch
 {
   public:
     Winch();
+    void initialise();
     void drive(int distanz, int direction);
     void test();
 
