@@ -16,11 +16,16 @@
 #include "drive.h"
 #include "pneumatic.h"
 #include "winch.h"
-#include "VirtuinoBluetooth.h"
 #include "debug.h"
 
+// Bluetooth Modul
+#include "VirtuinoBluetooth.h"
+#include <SoftwareSerial.h>                              //  Disable this line if you want to use hardware serial
+SoftwareSerial bluetoothSerial = SoftwareSerial(2,3);   // arduino TX pin=2  arduino RX pin=3    connect the arduino RX pin to bluetooth module TX pin   -  connect the arduino TX pin to bluetooth module RX pin.  Disable this line if you want to use hardware serial
+VirtuinoBluetooth virtuino(bluetoothSerial, 9600);       // Set SoftwareSerial baud rate.  -  Disable this line if you want to use hardware serial
+
 Drive drive;
-Communicate bluetooth(Serial1,9600);
+//Communicate bluetooth(Serial1,9600);
 Winch winch;
 Pneumatic pneumatic;
 
@@ -30,6 +35,7 @@ void setup(){
   // Overview over the PIN-defines are in global.h
 
   Serial.begin(9600);                // Set serial monitor baud rate
+  bluetoothSerial.begin(9600);
   Serial.println("Initialise Arduino");
 
   bluetooth.DEBUG=false;               // set this value TRUE to enable the serial monitor status
@@ -37,8 +43,8 @@ void setup(){
 
   // Use virtuino.vPinMode instead default pinMode method for digital input or digital output pins.
    //pinMode(pinalias, OUTPUT);
-   pinMode(LED_BUILTIN, OUTPUT);
-   bluetooth.vPinMode(testLED,OUTPUT);
+   //pinMode(LED_BUILTIN, OUTPUT);
+   //bluetooth.vPinMode(testLED,OUTPUT);
 
    //== PIN STEPPER====
    //==UPSTAIRS
@@ -75,11 +81,46 @@ void setup(){
 
 //=========================================================================================
 void loop(){
+// Bluetooth Modul
+virtuino.run();
+if (vDigitalMemoryRead(AutomaticDriving) == 1){
+  // Zuerst auf Position 0 zurückfahren
+  DEBUG_PRINTLN("Drive RIGHT 500");
+  drive.Driving(500, RIGHT);
+  DEBUG_PRINTLN("Drive DOWN 500");
+  winch.drive(500,DOWN);
+  DEBUG_PRINTLN("Drive UP 500");
+  winch.drive(500,UP);
+  DEBUG_PRINTLN("Drive LEFT 500");
+  drive.Driving(500, LEFT);
+
+  delay(5000);
+}
+
+if (vDigitalMemoryRead(DriveRight) == 1){
+  //andere Funktionschreiben while vDigitalMemoryRead == 1 do Steps
+  drive.Driving(20, RIGHT);
+}
+
+if (vDigitalMemoryRead(DriveLeft) == 1){
+  drive.Driving(20, LEFT);
+}
+
+if (vDigitalMemoryRead(DriveUp) == 1){
+  winch.drive(20,UP);
+}
+
+if (vDigitalMemoryRead(DriveDown) == 1){
+  winch.drive(20,DOWN);
+}
+
+// Serial Eingabe
 if(Serial.available()){                        //Send commands over serial to play
   switch(Serial.read()){
     case '1':
-      DEBUG_PRINTLN("Case '1' Drive LEFT 500");
-      drive.Driving(500, LEFT);
+    DEBUG_PRINTLN("Case '1' Drive LEFT 500");
+    drive.Driving(500, LEFT);
+
       DEBUG_PRINTLN("Case 1: finished");
       DEBUG_PRINTLN("");
       break;
@@ -130,5 +171,9 @@ if(Serial.available()){                        //Send commands over serial to pl
 
   }
 }
+
+
+
+
 
 }
