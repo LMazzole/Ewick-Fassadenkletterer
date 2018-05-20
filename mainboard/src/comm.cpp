@@ -1,16 +1,16 @@
 
-#include "comm.h"
+//#include "comm.h"
 // Communicate::Communicate(){
 // };
 
-Communicate::Communicate(HardwareSerial &uart): VirtuinoBluetooth(uart){
-}
+//Communicate::Communicate(HardwareSerial &uart): VirtuinoBluetooth(uart){
+//}
 
 
-Communicate::Communicate(HardwareSerial &uart, uint32_t baud) : VirtuinoBluetooth(uart,baud){
+//Communicate::Communicate(HardwareSerial &uart, uint32_t baud) : VirtuinoBluetooth(uart,baud){
 
-}
+//}
 
-void Communicate::test(){
+//void Communicate::test(){
 
-}
+//}
