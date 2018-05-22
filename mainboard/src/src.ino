@@ -17,15 +17,16 @@
 #include "pneumatic.h"
 #include "winch.h"
 #include "debug.h"
+#include "VirtuinoBluetooth.h"
 
-// Bluetooth Modul
-//#include "VirtuinoBluetooth.h"
+// Bluetooth Modul --> Hardware Serial einstellen
+//
 //#include <SoftwareSerial.h>                         //  Disable this line if you want to use hardware serial
 //SoftwareSerial bluetoothSerial = SoftwareSerial(2,3);   // arduino TX pin=2  arduino RX pin=3    connect the arduino RX pin to bluetooth module TX pin   -  connect the arduino TX pin to bluetooth module RX pin.  Disable this line if you want to use hardware serial
 //VirtuinoBluetooth virtuino(bluetoothSerial, 9600);       // Set SoftwareSerial baud rate.  -  Disable this line if you want to use hardware serial
 
 Drive drive;
-//Communicate bluetooth(Serial1,9600);
+Communicate bluetooth(Serial1,9600);
 Winch winch;
 Pneumatic pneumatic;
 
@@ -83,24 +84,40 @@ void setup(){
 void loop(){
 // Bluetooth Modul
 // virtuino.run();
-// if (virtuino.vDigitalMemoryRead(1) == 1){
-//   // Zuerst auf Position 0 zurückfahren
+
+// Automatisches Fahren
+// if (virtuino.vDigitalMemoryRead(AutomaticDriving) == 1){
+//   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
 //   DEBUG_PRINTLN("Drive RIGHT 500");
-//   drive.Driving(500, RIGHT);
+//   drive.Driving(1500, RIGHT);
 //   DEBUG_PRINTLN("Drive DOWN 500");
-//   winch.drive(500,DOWN);
+//   winch.drive(1000,DOWN);
+//   DEBUG_PRINTLN("Cylinder ausfahren"");
+//   pneumatic.cylinderout();
+//   delay(5000);
+//   DEBUG_PRINTLN("Cylinder einfahren"");
+//   pneumatic.cylinderin();
 //   DEBUG_PRINTLN("Drive UP 500");
-//   winch.drive(500,UP);
+//   winch.drive(1000,UP);
 //   DEBUG_PRINTLN("Drive LEFT 500");
-//   drive.Driving(500, LEFT);
+//   drive.Driving(1500, LEFT);
 //
 //   delay(5000);
 // }
 //
-// if (virtuino.vDigitalMemoryRead(1) == 1){
-//   //andere Funktionschreiben while vDigitalMemoryRead == 1 do Steps
-//   drive.Driving(20, RIGHT);
-// }
+//  Manuelle ansteuerung Motor
+//  if (virtuino.vDigitalMemoryRead(DriveRight) == 1){
+//    digitalWrite(DRIVER_1_DIR, HIGH);
+//    digitalWrite(DRIVER_2_DIR, HIGH);
+//    while(virtuino.vDigitalMemoryRead(DriveRight) == 1){
+//        digitalWrite(DRIVER_1_STEP, HIGH);
+//        digitalWrite(DRIVER_2_STEP, HIGH);
+//        delayMicroseconds(neededDelay);   //neededDelay ist keine globale Variabel
+//        digitalWrite(DRIVER_1_STEP, LOW);
+//        digitalWrite(DRIVER_2_STEP, LOW);
+//        delayMicroseconds(neededDelay);
+//    }
+//  }
 //
 // if (virtuino.vDigitalMemoryRead(1) == 1){
 //   drive.Driving(20, LEFT);

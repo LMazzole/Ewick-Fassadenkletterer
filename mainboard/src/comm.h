@@ -10,6 +10,7 @@
 class Communicate : public VirtuinoBluetooth
 {
   private:
+
     HardwareSerial &uart = Serial1;
   public:
     // Communicate();
