@@ -26,7 +26,8 @@
 //VirtuinoBluetooth virtuino(bluetoothSerial, 9600);       // Set SoftwareSerial baud rate.  -  Disable this line if you want to use hardware serial
 
 Drive drive;
-Communicate bluetooth(Serial1,9600);
+Communicate bluetooth(Serial3,9600);
+//VirtuinoBluetooth virtuino(9600);
 Winch winch;
 Pneumatic pneumatic;
 
@@ -83,27 +84,29 @@ void setup(){
 //=========================================================================================
 void loop(){
 // Bluetooth Modul
-// virtuino.run();
+bluetooth.run();
 
 // Automatisches Fahren
-// if (virtuino.vDigitalMemoryRead(AutomaticDriving) == 1){
-//   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
-//   DEBUG_PRINTLN("Drive RIGHT 500");
-//   drive.Driving(1500, RIGHT);
-//   DEBUG_PRINTLN("Drive DOWN 500");
-//   winch.drive(1000,DOWN);
-//   DEBUG_PRINTLN("Cylinder ausfahren"");
-//   pneumatic.cylinderout();
-//   delay(5000);
-//   DEBUG_PRINTLN("Cylinder einfahren"");
-//   pneumatic.cylinderin();
-//   DEBUG_PRINTLN("Drive UP 500");
-//   winch.drive(1000,UP);
-//   DEBUG_PRINTLN("Drive LEFT 500");
-//   drive.Driving(1500, LEFT);
-//
-//   delay(5000);
-// }
+if (bluetooth.vDigitalMemoryRead(AutomaticDriving) == 1){
+  // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
+  DEBUG_PRINTLN("Drive RIGHT 500");
+  drive.Driving(1500, RIGHT);
+  DEBUG_PRINTLN("Drive DOWN 500");
+  winch.drive(1000, DOWN);
+  DEBUG_PRINTLN("Cylinder ausfahren");
+  pneumatic.cylinderout();
+
+  delay(5000);
+
+  DEBUG_PRINTLN("Cylinder einfahren");
+  pneumatic.cylinderin();
+  DEBUG_PRINTLN("Drive UP 500");
+  winch.drive(1000, UP);
+  DEBUG_PRINTLN("Drive LEFT 500");
+  drive.Driving(1500, LEFT);
+
+  delay(5000);
+}
 //
 //  Manuelle ansteuerung Motor
 //  if (virtuino.vDigitalMemoryRead(DriveRight) == 1){
