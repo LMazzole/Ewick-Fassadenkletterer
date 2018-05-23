@@ -42,7 +42,7 @@ void Drive::Driving(double driveDistance, int direction){
     printDouble(maxSpeed,10);
     DEBUG_PRINT("Zurückgelegter Weg pro Motorumdrehung: ");
     printDouble(wegProMotorumdrehung,10);
-    DEBUG_PRINT("Delay in Milliseconds:");
+    DEBUG_PRINT("Delay in Microseconds:");
     printDouble(neededDelay,10);
 
   // delay(500);

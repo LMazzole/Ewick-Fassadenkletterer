@@ -87,7 +87,7 @@ void loop(){
 bluetooth.run();
 
 // Automatisches Fahren
-if (bluetooth.vDigitalMemoryRead(AutomaticDriving) == 1){
+if (bluetooth.vDigitalMemoryRead(1) == 1){
   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
   DEBUG_PRINTLN("Drive RIGHT 500");
   drive.Driving(1500, RIGHT);
@@ -96,7 +96,7 @@ if (bluetooth.vDigitalMemoryRead(AutomaticDriving) == 1){
   DEBUG_PRINTLN("Cylinder ausfahren");
   pneumatic.cylinderout();
 
-  delay(5000);
+  bluetooth.vDelay(5000);
 
   DEBUG_PRINTLN("Cylinder einfahren");
   pneumatic.cylinderin();
@@ -105,7 +105,8 @@ if (bluetooth.vDigitalMemoryRead(AutomaticDriving) == 1){
   DEBUG_PRINTLN("Drive LEFT 500");
   drive.Driving(1500, LEFT);
 
-  delay(5000);
+  bluetooth.vDigitalMemoryWrite(1, 0);
+  bluetooth.vDelay(5000);
 }
 //
 //  Manuelle ansteuerung Motor
