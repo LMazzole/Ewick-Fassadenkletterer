@@ -87,7 +87,7 @@ void loop(){
 bluetooth.run();
 
 // Automatisches Fahren
-if (bluetooth.vDigitalMemoryRead(1) == 1){
+if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
   DEBUG_PRINTLN("Drive RIGHT 500");
   drive.Driving(200, RIGHT);
@@ -105,35 +105,36 @@ if (bluetooth.vDigitalMemoryRead(1) == 1){
   DEBUG_PRINTLN("Drive LEFT 500");
   drive.Driving(200, LEFT);
 
-  bluetooth.vDigitalMemoryWrite(1, 0);
+  bluetooth.vDigitalMemoryWrite(AUTOMATIC_DRIVING, 0);
   bluetooth.vDelay(5000);
 }
-//
-//  Manuelle ansteuerung Motor
-//  if (virtuino.vDigitalMemoryRead(DriveRight) == 1){
-//    digitalWrite(DRIVER_1_DIR, HIGH);
-//    digitalWrite(DRIVER_2_DIR, HIGH);
-//    while(virtuino.vDigitalMemoryRead(DriveRight) == 1){
-//        digitalWrite(DRIVER_1_STEP, HIGH);
-//        digitalWrite(DRIVER_2_STEP, HIGH);
-//        delayMicroseconds(neededDelay);   //neededDelay ist keine globale Variabel
-//        digitalWrite(DRIVER_1_STEP, LOW);
-//        digitalWrite(DRIVER_2_STEP, LOW);
-//        delayMicroseconds(neededDelay);
-//    }
-//  }
-//
-// if (virtuino.vDigitalMemoryRead(1) == 1){
-//   drive.Driving(20, LEFT);
-// }
-//
-// if (virtuino.vDigitalMemoryRead(1) == 1){
-//   winch.drive(20,UP);
-// }
-//
-// if (virtuino.vDigitalMemoryRead(1) == 1){
-//   winch.drive(20,DOWN);
-// }
+
+
+ // Manuelle ansteuerung Motor
+ if (virtuino.vDigitalMemoryRead(DRIVE_RIGHT) == 1){
+   drive.Driving(50, RIGHT);
+   bluetooth.vDigitalMemoryWrite(DRIVE_RIGHT, 0);
+   bluetooth.vDelay(500);
+ }
+
+ if (virtuino.vDigitalMemoryRead(DRIVE_LEFT) == 1){
+   drive.Driving(50, LEFT);
+   bluetooth.vDigitalMemoryWrite(DRIVE_LEFT, 0);
+   bluetooth.vDelay(500);
+ }
+
+ if (virtuino.vDigitalMemoryRead(DRIVE_DOWN) == 1){
+   winch.drive(50, DOWN);
+   bluetooth.vDigitalMemoryWrite(DRIVE_DOWN, 0);
+   bluetooth.vDelay(500);
+ }
+
+ if (virtuino.vDigitalMemoryRead(DRIVE_UP) == 1){
+   winch.drive(50, UP);
+   bluetooth.vDigitalMemoryWrite(DRIVE_UP, 0);
+   bluetooth.vDelay(500);
+ }
+
 
 // Serial Eingabe
 if(Serial.available()){                        //Send commands over serial to play

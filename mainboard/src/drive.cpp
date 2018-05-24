@@ -122,7 +122,7 @@ long Drive::CalculationDistanceToSteps(double distance){
   DEBUG_PRINTLN("==Drive::CalculationDistanceToSteps(distance)");
   DEBUG_PRINTLN("===============Start Berechung Steps===============");
   unsigned long steps = distance/wegProMotorumdrehung*stepsPerRevolution;
-  return steps*16;
+  return steps;
   DEBUG_PRINTLN("===============Start Berechung Steps===============");
 }
 

@@ -10,11 +10,11 @@ const bool RIGHT = 1;
 const bool LEFT = 0;
 
 // define const Bluetooth Modul
-const int AutomaticDriving = 1;
-const int DriveRight = 2;
-const int DriveLeft = 3;
-const int DriveUp = 4;
-const int DriveDown = 5;
+#define AUTOMATIC_DRIVING = 1;
+#define DRIVE_RIGHT = 2;
+#define DRIVE_LEFT = 3;
+#define DRIVE_UP = 4;
+#define DRIVE_DOWN = 5;
 
 // const int links = -1;
 // const int rechts = 1;

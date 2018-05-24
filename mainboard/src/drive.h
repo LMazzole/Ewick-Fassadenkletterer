@@ -33,7 +33,7 @@ class Drive
     //int speedTop=0;
     //int stepCountBottom = 0;
     //int speedBottom = 0;
-    const int stepsPerRevolution = 200;
+    const int stepsPerRevolution = 200*16;
     const double durchmesserZahnradAn = 24.0;
     const double durchmesserZahnradAb = 77.0;
     const double durchmesserReibrad = 90.0;
