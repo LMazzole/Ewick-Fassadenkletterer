@@ -27,6 +27,7 @@ class Drive
     void Acceleration();
     void SlowDown();
     void printDouble(double val, unsigned int precision);
+    // unsigned int WriteDrivingArray(long steps);
 
   private:
     //int stepCountTop = 0;

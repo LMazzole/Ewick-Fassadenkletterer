@@ -111,25 +111,25 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
 
 
  // Manuelle ansteuerung Motor
- if (virtuino.vDigitalMemoryRead(DRIVE_RIGHT) == 1){
+ if (bluetooth.vDigitalMemoryRead(DRIVE_RIGHT) == 1){
    drive.Driving(50, RIGHT);
    bluetooth.vDigitalMemoryWrite(DRIVE_RIGHT, 0);
    bluetooth.vDelay(500);
  }
 
- if (virtuino.vDigitalMemoryRead(DRIVE_LEFT) == 1){
+ if (bluetooth.vDigitalMemoryRead(DRIVE_LEFT) == 1){
    drive.Driving(50, LEFT);
    bluetooth.vDigitalMemoryWrite(DRIVE_LEFT, 0);
    bluetooth.vDelay(500);
  }
 
- if (virtuino.vDigitalMemoryRead(DRIVE_DOWN) == 1){
+ if (bluetooth.vDigitalMemoryRead(DRIVE_DOWN) == 1){
    winch.drive(50, DOWN);
    bluetooth.vDigitalMemoryWrite(DRIVE_DOWN, 0);
    bluetooth.vDelay(500);
  }
 
- if (virtuino.vDigitalMemoryRead(DRIVE_UP) == 1){
+ if (bluetooth.vDigitalMemoryRead(DRIVE_UP) == 1){
    winch.drive(50, UP);
    bluetooth.vDigitalMemoryWrite(DRIVE_UP, 0);
    bluetooth.vDelay(500);

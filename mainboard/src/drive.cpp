@@ -80,20 +80,52 @@ void Drive::Driving(double driveDistance, int direction){
 }
 
 
+// unsigned int Drive::WriteDrivingArray(long steps){
+//   unsigned int array[steps];
+//   // Write Acceleration
+//   int positionArray = 0;
+//   int positionSin = 0;
+//   while ( positionSin<=156 ){
+//     array[positionArray] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
+//     array[positionArray + 1] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
+//     positionSin = positionSin + 1;
+//     positionArray = positionArray + 2;
+//   }
+//   // Write driving
+//   long anzahl = (steps-1)-(2*157);
+//   while (positionArray<=anzahl) {
+//     array[positionArray] = neededDelay;
+//     positionArray = positionArray + 1;
+//   }
+//
+//   // Write SlowDown
+//   positionSin = 156;
+//   while (positionSin >= 0) {
+//     array[positionArray] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
+//     array[positionArray + 1] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
+//     positionSin = positionSin - 1;
+//     positionArray = positionArray + 2;
+//   }
+//
+//   return array;
+// }
+
 void Drive::Acceleration(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
   DEBUG_PRINTLN("==Anfahren Start==");
+  unsigned int delay;
 
    for(int i = 0; i <= 156; i++) {
+     delay = neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]);
      Serial.println("Delay = ");
-     printDouble(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]),10);
+     printDouble(delay,10);
 
      digitalWrite(DRIVER_1_STEP, HIGH);
      digitalWrite(DRIVER_2_STEP, HIGH);
-     delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+     delayMicroseconds(delay);
      digitalWrite(DRIVER_1_STEP, LOW);
      digitalWrite(DRIVER_2_STEP, LOW);
-     delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+     delayMicroseconds(delay);
     }
 
   DEBUG_PRINTLN("==Anfahren Ende==");
@@ -104,16 +136,17 @@ void Drive::SlowDown(){
   DEBUG_PRINTLN("==Drive::SlowDown()");
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
   DEBUG_PRINTLN("==================Abbremsen Start===========================");
+    unsigned int delay;
     for(int i = 156; i >= 0; i--) {
+      delay = neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]);
       DEBUG_PRINT("Delay = ");
-      printDouble(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]),10);
-
+      printDouble(delay,10);
       digitalWrite(DRIVER_1_STEP, HIGH);
       digitalWrite(DRIVER_2_STEP, HIGH);
-      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+      delayMicroseconds(delay);
       digitalWrite(DRIVER_1_STEP, LOW);
       digitalWrite(DRIVER_2_STEP, LOW);
-      delay(neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]));
+      delayMicroseconds(delay);
     }
     DEBUG_PRINTLN("==================Abbremsen Ende===========================");
 }
