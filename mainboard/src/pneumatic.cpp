@@ -16,10 +16,10 @@ void Pneumatic::cylinderout(){
   digitalWrite(PNEUMATIC_VALVE_OUT, HIGH);
   delay(time_cylinder_offout); //Start Vaccum after delay
   vacuumcup(true);
-  while (!vacuumstatus()) {
-    delay(100); //Pollingrate
-  }
-    // delay(time_cylinder_in);
+  // while (!vacuumstatus()) {
+  //   delay(100); //Pollingrate
+  // }
+    delay(time_cylinder_in);
   DEBUG_PRINTLN("       PNEUMATIC_VALVE_OUT, LOW");
   digitalWrite(PNEUMATIC_VALVE_OUT, LOW);
   DEBUG_PRINTLN("Cylinder out: Stopped");

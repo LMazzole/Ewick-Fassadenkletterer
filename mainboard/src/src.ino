@@ -90,9 +90,9 @@ bluetooth.run();
 if (bluetooth.vDigitalMemoryRead(1) == 1){
   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
   DEBUG_PRINTLN("Drive RIGHT 500");
-  drive.Driving(1500, RIGHT);
+  drive.Driving(200, RIGHT);
   DEBUG_PRINTLN("Drive DOWN 500");
-  winch.drive(1000, DOWN);
+  winch.drive(200, DOWN);
   DEBUG_PRINTLN("Cylinder ausfahren");
   pneumatic.cylinderout();
 
@@ -101,9 +101,9 @@ if (bluetooth.vDigitalMemoryRead(1) == 1){
   DEBUG_PRINTLN("Cylinder einfahren");
   pneumatic.cylinderin();
   DEBUG_PRINTLN("Drive UP 500");
-  winch.drive(1000, UP);
+  winch.drive(200, UP);
   DEBUG_PRINTLN("Drive LEFT 500");
-  drive.Driving(1500, LEFT);
+  drive.Driving(200, LEFT);
 
   bluetooth.vDigitalMemoryWrite(1, 0);
   bluetooth.vDelay(5000);

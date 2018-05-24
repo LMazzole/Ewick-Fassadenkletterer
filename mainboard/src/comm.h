@@ -13,7 +13,7 @@ class Communicate : public VirtuinoBluetooth
     HardwareSerial &uart = Serial1;
   public:
     // Communicate();
-    // Communicate(HardwareSerial &uart);
+    Communicate(HardwareSerial &uart);
     Communicate(HardwareSerial &uart, uint32_t baud);
     void test();
 
