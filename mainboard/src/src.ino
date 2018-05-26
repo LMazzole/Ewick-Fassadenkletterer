@@ -111,37 +111,34 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
 
 
  // Manuelle ansteuerung Motor
- if (bluetooth.vDigitalMemoryRead(DRIVE_RIGHT) == 1){
-   drive.Driving(50, RIGHT);
-   bluetooth.vDigitalMemoryWrite(DRIVE_RIGHT, 0);
+ if (bluetooth.vDigitalMemoryRead(DRIVE_MANUAL) == 1){
+   Serial.print("Horizontal Value: ");
+   Serial.println(bluetooth.vDigitalMemoryRead(VALUE_HORIZONTAL));
+
+   Serial.print("Vertikal Value: ");
+   Serial.println(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL));
+
+   bluetooth.vDigitalMemoryWrite(DRIVE_MANUAL, 0);
    bluetooth.vDelay(500);
+
+   bluetooth.vDigitalMemoryWrite(POSITION_HORIZONTAL, bluetooth.vDigitalMemoryRead(VALUE_HORIZONTAL));
+   bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL, bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL));
  }
 
- if (bluetooth.vDigitalMemoryRead(DRIVE_LEFT) == 1){
-   drive.Driving(50, LEFT);
-   bluetooth.vDigitalMemoryWrite(DRIVE_LEFT, 0);
-   bluetooth.vDelay(500);
- }
+if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_IN == 1)){
+  // Zylinder IN
+}
 
- if (bluetooth.vDigitalMemoryRead(DRIVE_DOWN) == 1){
-   winch.drive(50, DOWN);
-   bluetooth.vDigitalMemoryWrite(DRIVE_DOWN, 0);
-   bluetooth.vDelay(500);
- }
-
- if (bluetooth.vDigitalMemoryRead(DRIVE_UP) == 1){
-   winch.drive(50, UP);
-   bluetooth.vDigitalMemoryWrite(DRIVE_UP, 0);
-   bluetooth.vDelay(500);
- }
-
+if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_OUT == 1)){
+  // Zylinder out
+}
 
 // Serial Eingabe
 if(Serial.available()){                        //Send commands over serial to play
   switch(Serial.read()){
     case '1':
     DEBUG_PRINTLN("Case '1' Drive LEFT 500");
-    drive.Driving(500, LEFT);
+    drive.Driving(284, LEFT);
 
       DEBUG_PRINTLN("Case 1: finished");
       DEBUG_PRINTLN("");
@@ -191,6 +188,20 @@ if(Serial.available()){                        //Send commands over serial to pl
       DEBUG_PRINTLN("");
     break;
 
+    case'8':
+    int anzahl = 88/88*800;
+    DEBUG_PRINTLN(anzahl);
+    for (int i = 0; i <= anzahl; i++) {
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delayMicroseconds(275);
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delayMicroseconds(275);
+    }
+    break;
+    DEBUG_PRINTLN("Case 8: finished");
+    DEBUG_PRINTLN("");
   }
 }
 

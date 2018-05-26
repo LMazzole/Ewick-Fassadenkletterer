@@ -34,15 +34,15 @@ class Drive
     //int speedTop=0;
     //int stepCountBottom = 0;
     //int speedBottom = 0;
-    const int stepsPerRevolution = 200*16;
+    const int stepsPerRevolution = 200*4;
     const double durchmesserZahnradAn = 24.0;
     const double durchmesserZahnradAb = 77.0;
     const double durchmesserReibrad = 90.0;
     const double maxSpeed = 0.05; // speed [m/s]
     const double wegProMotorumdrehung = M_PI*durchmesserReibrad*(durchmesserZahnradAn/durchmesserZahnradAb);
     const unsigned int neededDelay = M_PI*durchmesserReibrad*durchmesserZahnradAn/(400*maxSpeed*durchmesserZahnradAb)*1000/16;
-    const int accelorationFaktor = 10;
-    const float sin3[157]={ 0.000,
+    const int accelorationFaktor = 300000;
+    const float sin3[162]={ 0.000,
                             0.000,
                             0.000,
                             0.000,
@@ -197,6 +197,11 @@ class Drive
                             0.998,
                             0.999,
                             0.999,
+                            1.000,
+                            1.000,
+                            1.000,
+                            1.000,
+                            1.000,
                             1.000,
                             1.000};
 };

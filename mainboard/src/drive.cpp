@@ -59,7 +59,7 @@ void Drive::Driving(double driveDistance, int direction){
   DEBUG_PRINT("Benötigte Steps: ");
   printDouble(neededSteps,10);
 
-  // Acceleration()
+  // Acceleration();
 
   DEBUG_PRINTLN("==Fahren Start==");
   printDouble(neededDelay,10);
@@ -75,7 +75,7 @@ void Drive::Driving(double driveDistance, int direction){
   }
   DEBUG_PRINTLN("==Fahren Ende==");
 
-  //SlowDown();
+ //SlowDown();
 
 }
 
@@ -115,18 +115,41 @@ void Drive::Acceleration(){
   DEBUG_PRINTLN("==Anfahren Start==");
   unsigned int delay;
 
-   for(int i = 0; i <= 156; i++) {
-     delay = neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]);
-     Serial.println("Delay = ");
-     printDouble(delay,10);
-
-     digitalWrite(DRIVER_1_STEP, HIGH);
-     digitalWrite(DRIVER_2_STEP, HIGH);
-     delayMicroseconds(delay);
-     digitalWrite(DRIVER_1_STEP, LOW);
-     digitalWrite(DRIVER_2_STEP, LOW);
-     delayMicroseconds(delay);
+   for(int i = 0; i <= 162; i++) {
+    delay = neededDelay+accelorationFaktor/(neededDelay/2)*(1-sin3[i]);
+    DEBUG_PRINT("Delay = ");
+    DEBUG_PRINTLN(delay);
+    for (size_t n = 0; n < 23; n++) {
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delayMicroseconds(delay);
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delayMicroseconds(delay);
     }
+ }
+ // for (size_t n = 0; n < 100; n++) {
+ //   digitalWrite(DRIVER_1_STEP, HIGH);
+ //   digitalWrite(DRIVER_2_STEP, HIGH);
+ //   delayMicroseconds(delay);
+ //   digitalWrite(DRIVER_1_STEP, LOW);
+ //   digitalWrite(DRIVER_2_STEP, LOW);
+ //   delayMicroseconds(delay);
+ // }
+     // int positionSin = 0;
+     // while ( positionSin<=156 ){
+     //     delay = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
+     //     digitalWrite(DRIVER_1_STEP, HIGH);
+     //     digitalWrite(DRIVER_2_STEP, HIGH);
+     //     delayMicroseconds(delay);
+     //     digitalWrite(DRIVER_1_STEP, LOW);
+     //     digitalWrite(DRIVER_2_STEP, LOW);
+     //     delayMicroseconds(delay);
+     //
+     //     positionSin = positionSin + 1;
+     //     positionArray = positionArray + 2;
+
+  //  }
 
   DEBUG_PRINTLN("==Anfahren Ende==");
 }

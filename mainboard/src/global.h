@@ -11,10 +11,15 @@ const bool LEFT = 0;
 
 // define const Bluetooth Modul
 #define AUTOMATIC_DRIVING (1)
-#define DRIVE_RIGHT (2)
-#define DRIVE_LEFT (3)
-#define DRIVE_UP (4)
-#define DRIVE_DOWN (5)
+#define DRIVE_MANUAL (15)
+#define VALUE_HORIZONTAL (17)
+#define VALUE_VERTIKAL (16)
+
+#define POSITION_HORIZONTAL (29)
+#define POSITION_VERTIKAL (30)
+#define ZYLINDER_MANUAL_IN (26)
+#define ZYLINDER_MANUAL_OUT (27)
+
 
 // const int links = -1;
 // const int rechts = 1;
