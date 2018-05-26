@@ -89,6 +89,14 @@ bluetooth.run();
 // Automatisches Fahren
 if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
+  DEBUG_PRINTLN("Anfangsposition fahren");
+  DEBUG_PRINT("Drive Up: ");
+  DEBUG_PRINTLN(winch.position);
+  winch.drive(winch.position,UP);
+  DEBUG_PRINT("Drive left: ");
+  DEBUG_PRINTLN(drive.actualHorizontalPosition);
+  drive.Driving(drive.actualHorizontalPosition, LEFT)
+
   DEBUG_PRINTLN("Drive RIGHT 500");
   drive.Driving(200, RIGHT);
   DEBUG_PRINTLN("Drive DOWN 500");
