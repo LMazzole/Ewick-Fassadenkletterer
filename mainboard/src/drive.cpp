@@ -26,7 +26,7 @@ void Drive::printDouble(double val, unsigned int precision){
 }
 
 
-void Drive::Driving(double driveDistance, int direction){
+void Drive::Driving(unsigned int driveDistance, int direction){
     DEBUG_PRINTLN("==Drive::Driving(driveDistance,direction)");
     DEBUG_PRINT("driveDistance: ");
     DEBUG_PRINTLN(driveDistance);
@@ -44,6 +44,8 @@ void Drive::Driving(double driveDistance, int direction){
     printDouble(wegProMotorumdrehung,10);
     DEBUG_PRINT("Delay in Microseconds:");
     printDouble(neededDelay,10);
+    DEBUG_PRINT("sizeof(sin3):");
+    DEBUG_PRINT(sizeof(sin3));
 
   // delay(500);
 
@@ -59,63 +61,53 @@ void Drive::Driving(double driveDistance, int direction){
   DEBUG_PRINT("Benötigte Steps: ");
   printDouble(neededSteps,10);
 
-  // Acceleration();
-
-  DEBUG_PRINTLN("==Fahren Start==");
-  printDouble(neededDelay,10);
-  for(unsigned long i=0; i <= neededSteps;  i++){
-    //Serial.println("Delay = ");
-    //printDouble(neededDelay,10);
-    digitalWrite(DRIVER_1_STEP, HIGH);
-    digitalWrite(DRIVER_2_STEP, HIGH);
-    delayMicroseconds(neededDelay);
-    digitalWrite(DRIVER_1_STEP, LOW);
-    digitalWrite(DRIVER_2_STEP, LOW);
-    delayMicroseconds(neededDelay);
+  if(neededSteps < 2*sizeof(sin3)){
+    DEBUG_PRINT("Die ausgewählte Distanz ist zu klein!");
+    return;
   }
-  DEBUG_PRINTLN("==Fahren Ende==");
+  else {
 
- //SlowDown();
+    neededSteps = neededSteps - 2*sizeof(sin3);
+
+    Acceleration();
+
+    DEBUG_PRINTLN("==Fahren Start==");
+    printDouble(neededDelay,10);
+    for(unsigned long i=0; i <= neededSteps;  i++){
+      //Serial.println("Delay = ");
+      //printDouble(neededDelay,10);
+      digitalWrite(DRIVER_1_STEP, HIGH);
+      digitalWrite(DRIVER_2_STEP, HIGH);
+      delayMicroseconds(neededDelay);
+      digitalWrite(DRIVER_1_STEP, LOW);
+      digitalWrite(DRIVER_2_STEP, LOW);
+      delayMicroseconds(neededDelay);
+    }
+    DEBUG_PRINTLN("==Fahren Ende==");
+
+   SlowDown();
+
+   if(direction == 1){
+      actualHorizontalPosition = actualHorizontalPosition + driveDistance;
+   }
+   else if(direction == 0){
+     actualHorizontalPosition = actualHorizontalPosition - driveDistance;
+   }
+
+   return;
+
+  }
+
 
 }
-
-
-// unsigned int Drive::WriteDrivingArray(long steps){
-//   unsigned int array[steps];
-//   // Write Acceleration
-//   int positionArray = 0;
-//   int positionSin = 0;
-//   while ( positionSin<=156 ){
-//     array[positionArray] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
-//     array[positionArray + 1] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
-//     positionSin = positionSin + 1;
-//     positionArray = positionArray + 2;
-//   }
-//   // Write driving
-//   long anzahl = (steps-1)-(2*157);
-//   while (positionArray<=anzahl) {
-//     array[positionArray] = neededDelay;
-//     positionArray = positionArray + 1;
-//   }
-//
-//   // Write SlowDown
-//   positionSin = 156;
-//   while (positionSin >= 0) {
-//     array[positionArray] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
-//     array[positionArray + 1] = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
-//     positionSin = positionSin - 1;
-//     positionArray = positionArray + 2;
-//   }
-//
-//   return array;
-// }
 
 void Drive::Acceleration(){
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
   DEBUG_PRINTLN("==Anfahren Start==");
+
   unsigned int delay;
 
-   for(int i = 0; i <= 162; i++) {
+   for(unsigned int i = 0; i < sizeof(sin3); i++) {
     delay = neededDelay+accelorationFaktor/(neededDelay/2)*(1-sin3[i]);
     DEBUG_PRINT("Delay = ");
     DEBUG_PRINTLN(delay);
@@ -128,28 +120,6 @@ void Drive::Acceleration(){
       delayMicroseconds(delay);
     }
  }
- // for (size_t n = 0; n < 100; n++) {
- //   digitalWrite(DRIVER_1_STEP, HIGH);
- //   digitalWrite(DRIVER_2_STEP, HIGH);
- //   delayMicroseconds(delay);
- //   digitalWrite(DRIVER_1_STEP, LOW);
- //   digitalWrite(DRIVER_2_STEP, LOW);
- //   delayMicroseconds(delay);
- // }
-     // int positionSin = 0;
-     // while ( positionSin<=156 ){
-     //     delay = neededDelay+accelorationFaktor/neededDelay*(1-sin3[positionSin]);
-     //     digitalWrite(DRIVER_1_STEP, HIGH);
-     //     digitalWrite(DRIVER_2_STEP, HIGH);
-     //     delayMicroseconds(delay);
-     //     digitalWrite(DRIVER_1_STEP, LOW);
-     //     digitalWrite(DRIVER_2_STEP, LOW);
-     //     delayMicroseconds(delay);
-     //
-     //     positionSin = positionSin + 1;
-     //     positionArray = positionArray + 2;
-
-  //  }
 
   DEBUG_PRINTLN("==Anfahren Ende==");
 }
@@ -159,11 +129,14 @@ void Drive::SlowDown(){
   DEBUG_PRINTLN("==Drive::SlowDown()");
   // delay(CalculationDelay+gewichtung/CalculationDelay*(1-sin3[i]))
   DEBUG_PRINTLN("==================Abbremsen Start===========================");
-    unsigned int delay;
-    for(int i = 156; i >= 0; i--) {
-      delay = neededDelay+accelorationFaktor/neededDelay*(1-sin3[i]);
-      DEBUG_PRINT("Delay = ");
-      printDouble(delay,10);
+
+  unsigned int delay;
+
+   for(unsigned int i = sizeof(sin3)-1; i >= 0; i--) {
+    delay = neededDelay+accelorationFaktor/(neededDelay/2)*(1-sin3[i]);
+    DEBUG_PRINT("Delay = ");
+    DEBUG_PRINTLN(delay);
+    for (size_t n = 0; n < 23; n++) {
       digitalWrite(DRIVER_1_STEP, HIGH);
       digitalWrite(DRIVER_2_STEP, HIGH);
       delayMicroseconds(delay);
@@ -171,94 +144,15 @@ void Drive::SlowDown(){
       digitalWrite(DRIVER_2_STEP, LOW);
       delayMicroseconds(delay);
     }
-    DEBUG_PRINTLN("==================Abbremsen Ende===========================");
+ }
+
+  DEBUG_PRINTLN("==================Abbremsen Ende===========================");
 }
 
-long Drive::CalculationDistanceToSteps(double distance){
+long Drive::CalculationDistanceToSteps(unsigned int distance){
   DEBUG_PRINTLN("==Drive::CalculationDistanceToSteps(distance)");
   DEBUG_PRINTLN("===============Start Berechung Steps===============");
   unsigned long steps = distance/wegProMotorumdrehung*stepsPerRevolution;
   return steps;
   DEBUG_PRINTLN("===============Start Berechung Steps===============");
-}
-
-// void Steppermotor_UPSTAIRS::Step(int steps, int direction,int motorspeed)
-// {
-//           if (direction == LEFT){
-//           motor.setSpeed(motorspeed);
-//           motor.step(steps);
-//           }
-//           else{
-//           motor.setSpeed(motorspeed);
-//           motor.step(-1*steps);
-//           }
-// }
-//
-// void Steppermotor_DOWNSTAIRS::Step(int steps, int direction,int motorspeed)
-// {
-//           if (direction == LEFT){
-//           motor.setSpeed(motorspeed);
-//           motor.step(steps);
-//           }
-//           else{
-//           motor.setSpeed(motorspeed);
-//           motor.step(-1*steps);
-//           }
-// }
-
-void Drive::test(){
-DEBUG_PRINTLN("");
-  DEBUG_PRINTLN("===Start Drive Test===");
-
-  while (digitalRead(50)==LOW) {
-  }
-
-digitalWrite(DRIVER_1_DIR,HIGH);
-for (size_t i = 0; i < 10000; i=i+50) {
-  Serial.println("PWM: " + String(10000-i));
-   analogWrite(DRIVER_1_STEP,255);
-   delayMicroseconds((10000.0-i));
-   analogWrite(DRIVER_1_STEP,0);
-   delayMicroseconds((10000.0-i));
-}
-analogWrite(DRIVER_1_STEP,126);
-delay(10000);
-analogWrite(DRIVER_1_STEP,0);
-  // Serial.println(" Drive High, dir high");
-  // digitalWrite(DRIVER_1_DIR,HIGH);
-  // for (size_t i = 0; i < 256; i=i+10) {
-  //   analogWrite(DRIVER_1_STEP,i);
-  //   delay(200);
-  //   Serial.println("PWM: " + String(i));
-  // }
-  // Serial.println("======");
-  // delay(2000);
-  // for (size_t i = 0; i <256; i=i+10) {
-  //   analogWrite(DRIVER_1_STEP,(255-i));
-  //   delay(200);
-  //   Serial.println("PWM: " + String(255-i));
-  // }
-  // analogWrite(DRIVER_1_STEP,0);
-  // Serial.println("Change Dir");
-  // delay(2000);
-  // Serial.println(" Drive High, dir low");
-  // digitalWrite(DRIVER_1_DIR,LOW);
-  // for (size_t i = 0; i < 256; i=i+10) {
-  //   analogWrite(DRIVER_1_STEP,i);
-  //   delay(200);
-  //   Serial.println("PWM: " + String(i));
-  // }
-  // Serial.println("======");
-  // delay(2000);
-  // for (size_t i = 0; i <266; i=i+10) {
-  //   analogWrite(DRIVER_1_STEP,(255-i));
-  //   delay(200);
-  //   Serial.println("PWM: " + String(255-i));
-  // }
-  // analogWrite(DRIVER_1_STEP,0);
-
-  // void Steppermotor_UPSTAIRS.Step(20,1,20);
-  // delay(20000);
-  // void Steppermotor_DOWNSTAIRS.Step(20,1,20);
-  // delay(20000);
 }

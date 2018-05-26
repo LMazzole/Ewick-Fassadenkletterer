@@ -21,13 +21,12 @@ class Drive
   public:
     Drive();
     // void Step(int steps, int direction, int motorspeed);
-    void test();
-    long CalculationDistanceToSteps(double distance); // distance in mm
-    void Driving(double distance, int direction); //distance in mm
+    long CalculationDistanceToSteps(unsigned int distance); // distance in mm
+    void Driving(unsigned int distance, int direction); //distance in mm
     void Acceleration();
     void SlowDown();
     void printDouble(double val, unsigned int precision);
-    // unsigned int WriteDrivingArray(long steps);
+    unsigned int actualHorizontalPosition = 0;
 
   private:
     //int stepCountTop = 0;
