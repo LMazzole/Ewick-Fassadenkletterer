@@ -26,7 +26,7 @@ class Drive
     void Acceleration();
     void SlowDown();
     void printDouble(double val, unsigned int precision);
-    unsigned int actualHorizontalPosition = 0;
+    int actualHorizontalPosition = 0;
 
   private:
     //int stepCountTop = 0;

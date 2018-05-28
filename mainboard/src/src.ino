@@ -38,7 +38,9 @@ void setup(){
 
   Serial.begin(9600);                // Set serial monitor baud rate
   //bluetoothSerial.begin(9600);
+  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,300);
   Serial.println("Initialise Arduino");
+
 
   //bluetooth.DEBUG=false;               // set this value TRUE to enable the serial monitor status
 
@@ -95,12 +97,12 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
   winch.drive(winch.position,UP);
   DEBUG_PRINT("Drive left: ");
   DEBUG_PRINTLN(drive.actualHorizontalPosition);
-  drive.Driving(drive.actualHorizontalPosition, LEFT)
+  drive.Driving(drive.actualHorizontalPosition, LEFT);
 
   DEBUG_PRINTLN("Drive RIGHT 500");
-  drive.Driving(200, RIGHT);
+  drive.Driving(600, RIGHT);
   DEBUG_PRINTLN("Drive DOWN 500");
-  winch.drive(200, DOWN);
+  winch.drive(600, DOWN);
   DEBUG_PRINTLN("Cylinder ausfahren");
   pneumatic.cylinderout();
 
@@ -109,11 +111,15 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
   DEBUG_PRINTLN("Cylinder einfahren");
   pneumatic.cylinderin();
   DEBUG_PRINTLN("Drive UP 500");
-  winch.drive(200, UP);
+  winch.drive(600, UP);
   DEBUG_PRINTLN("Drive LEFT 500");
-  drive.Driving(200, LEFT);
+  drive.Driving(600, LEFT);
+
+
 
   bluetooth.vDigitalMemoryWrite(AUTOMATIC_DRIVING, 0);
+  bluetooth.vDigitalMemoryWrite(POSITION_HORIZONTAL, 0);
+  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL, 300);
   bluetooth.vDelay(5000);
 }
 
@@ -155,16 +161,16 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
 
    bluetooth.vDigitalMemoryWrite(DRIVE_MANUAL, 0);
    bluetooth.vDigitalMemoryWrite(POSITION_HORIZONTAL, drive.actualHorizontalPosition/10);
-   bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL, winch.position/10);
+   bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,(3000-winch.position)/10);
    bluetooth.vDelay(500);
  }
 
-if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_IN == 1)){
+if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_IN) == 1){
   pneumatic.cylinderin();
   bluetooth.vDigitalMemoryWrite(ZYLINDER_MANUAL_IN, 0);
 }
 
-if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_OUT == 1)){
+if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_OUT) == 1){
   pneumatic.cylinderout();
   bluetooth.vDigitalMemoryWrite(ZYLINDER_MANUAL_OUT, 0);
 }
@@ -174,7 +180,7 @@ if(Serial.available()){                        //Send commands over serial to pl
   switch(Serial.read()){
     case '1':
     DEBUG_PRINTLN("Case '1' Drive LEFT 500");
-    drive.Driving(284, LEFT);
+    drive.Driving(400, LEFT);
 
       DEBUG_PRINTLN("Case 1: finished");
       DEBUG_PRINTLN("");
@@ -196,7 +202,7 @@ if(Serial.available()){                        //Send commands over serial to pl
       DEBUG_PRINTLN("Case '4' Drive UP 500");
       winch.drive(500,UP);
       DEBUG_PRINTLN("Case 4: finished");
-      DEBUG_PRINTLN("");
+      // DEBUG_PRINTLN("");
     break;
 
     case'5':

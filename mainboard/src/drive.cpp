@@ -44,8 +44,8 @@ void Drive::Driving(unsigned int driveDistance, int direction){
     printDouble(wegProMotorumdrehung,10);
     DEBUG_PRINT("Delay in Microseconds:");
     printDouble(neededDelay,10);
-    DEBUG_PRINT("sizeof(sin3):");
-    DEBUG_PRINT(sizeof(sin3));
+    DEBUG_PRINTLN("sizeof(sin3):");
+    DEBUG_PRINT( sizeof(sin3)/sizeof(sin3[0]) );
 
   // delay(500);
 
@@ -61,13 +61,13 @@ void Drive::Driving(unsigned int driveDistance, int direction){
   DEBUG_PRINT("Benötigte Steps: ");
   printDouble(neededSteps,10);
 
-  if(neededSteps < 2*sizeof(sin3)){
+  if(neededSteps < 20*(sizeof(sin3)/sizeof(sin3[0]))){
     DEBUG_PRINT("Die ausgewählte Distanz ist zu klein!");
     return;
   }
   else {
 
-    neededSteps = neededSteps - 2*sizeof(sin3);
+    neededSteps = neededSteps - 20*(sizeof(sin3)/sizeof(sin3[0]));
 
     Acceleration();
 
@@ -85,7 +85,7 @@ void Drive::Driving(unsigned int driveDistance, int direction){
     }
     DEBUG_PRINTLN("==Fahren Ende==");
 
-   SlowDown();
+   //SlowDown();
 
    if(direction == 1){
       actualHorizontalPosition = actualHorizontalPosition + driveDistance;
@@ -107,11 +107,11 @@ void Drive::Acceleration(){
 
   unsigned int delay;
 
-   for(unsigned int i = 0; i < sizeof(sin3); i++) {
+   for(unsigned int i = 0; i < sizeof(sin3)/sizeof(sin3[0]); i++) {
     delay = neededDelay+accelorationFaktor/(neededDelay/2)*(1-sin3[i]);
     DEBUG_PRINT("Delay = ");
     DEBUG_PRINTLN(delay);
-    for (size_t n = 0; n < 23; n++) {
+    for (size_t n = 0; n < 20; n++) {
       digitalWrite(DRIVER_1_STEP, HIGH);
       digitalWrite(DRIVER_2_STEP, HIGH);
       delayMicroseconds(delay);

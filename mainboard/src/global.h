@@ -17,7 +17,7 @@ const bool LEFT = 0;
 
 #define POSITION_HORIZONTAL (29)
 #define POSITION_VERTIKAL (30)
-#define ZYLINDER_MANUAL_IN (26)
+#define ZYLINDER_MANUAL_IN (22)
 #define ZYLINDER_MANUAL_OUT (27)
 
 
