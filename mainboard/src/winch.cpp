@@ -100,39 +100,3 @@ void Winch::driveDirection(int direction){
   }
   drivePowerOn(true);
 }
-
-void Winch::test(){
-  //Serial.println("");
-  //Serial.println("===Start Winch Test===");
-  //Serial.println("");
-  Winch winch;
-  //int delaytime = 200;
-
-winch.drive(100, DOWN);
-delay(2000);
-winch.drive(100, UP);
-  //winch.drive(1000,DOWN);
-  //delay(delaytime);
-  //winch.drive(500,DOWN);
-  //delay(delaytime);
-  //winch.drive(1000,DOWN);
-  //delay(delaytime);
-  //winch.drive(450,DOWN);
-  //delay(delaytime);
-  //winch.drive(500,DOWN);
-  //delay(delaytime);
-  //winch.drive(500,DOWN);
-  //Serial.println("----------");
-  //winch.drive(1000,UP);
-  //delay(delaytime);
-  //winch.drive(500,UP);
-  //delay(delaytime);
-  //winch.drive(1000,UP);
-  //delay(delaytime);
-  //winch.drive(450,UP);
-  //delay(delaytime);
-  //winch.drive(500,UP);
-  //delay(delaytime);
-  //winch.drive(500,UP);
-  //delay(delaytime);
-}

@@ -143,11 +143,11 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
      drive.Driving(bluetooth.vDigitalMemoryRead(VALUE_HORIZONTAL)*10-drive.actualHorizontalPosition, RIGHT);
    }
 
-   Serial.print("Aktuelle vertikale Position unten: ");
-   Serial.println(winch.max_distanz_Winch-winch.position);
+   DEBUG_PRINT("Aktuelle vertikale Position unten: ");
+   DEBUG_PRINTLN(winch.max_distanz_Winch-winch.position);
 
-   Serial.print("Vertikal Value von unten: ");
-   Serial.println(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
+   DEBUG_PRINT("Vertikal Value von unten: ");
+   DEBUG_PRINTLN(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
 
    if(winch.max_distanz_Winch-winch.position > bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
      DEBUG_PRINTLN("Driving DOWN");
@@ -219,8 +219,8 @@ if(Serial.available()){                        //Send commands over serial to pl
       DEBUG_PRINTLN("");
     break;
 
-
     case'7':
+    DEBUG_PRINTLN("Case '7' Vacuumstatus");
     for (size_t i = 0; i < 50; i++) {
       DEBUG_PRINT("Vacuumstatus: ");
       DEBUG_PRINTLN(analogRead(PNEUMATIC_SENSOR));
@@ -231,6 +231,7 @@ if(Serial.available()){                        //Send commands over serial to pl
     break;
 
     case'8':
+    DEBUG_PRINTLN("Case '8' ");
     int anzahl = 88/88*800;
     DEBUG_PRINTLN(anzahl);
     for (int i = 0; i <= anzahl; i++) {
@@ -246,9 +247,4 @@ if(Serial.available()){                        //Send commands over serial to pl
     DEBUG_PRINTLN("");
   }
 }
-
-
-
-
-
 }

@@ -15,8 +15,6 @@ class Communicate : public VirtuinoBluetooth
     // Communicate();
     Communicate(HardwareSerial &uart);
     Communicate(HardwareSerial &uart, uint32_t baud);
-    void test();
-
 };
 
 
