@@ -178,6 +178,16 @@ if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_OUT) == 1){
 // Serial Eingabe
 if(Serial.available()){                        //Send commands over serial to play
   switch(Serial.read()){
+    case '0':
+      DEBUG_PRINTLN("Case '0' Info");
+      DEBUG_PRINTLN("Case '1' Drive LEFT 500mm");
+      DEBUG_PRINTLN("Case '2' Drive RIGHT 500mm");
+      DEBUG_PRINTLN("Case '3' Drive DOWN 500mm");
+      DEBUG_PRINTLN("Case '4' Drive UP 500mm");
+      DEBUG_PRINTLN("Case '5' Cylinder Out");
+      DEBUG_PRINTLN("Case '6' Cylinder In");
+      DEBUG_PRINTLN("Case '7' Vaccum Status");
+      break;
     case '1':
     DEBUG_PRINTLN("Case '1' Drive LEFT 500");
     drive.Driving(400, LEFT);

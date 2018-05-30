@@ -9,7 +9,7 @@ const int DOWN = 0;
 const bool RIGHT = 1;
 const bool LEFT = 0;
 
-// define const Bluetooth Modul
+// define const Bluetooth Modul§1
 #define AUTOMATIC_DRIVING (1)
 #define DRIVE_MANUAL (15)
 #define VALUE_HORIZONTAL (17)

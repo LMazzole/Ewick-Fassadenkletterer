@@ -21,7 +21,7 @@ class Pneumatic
     const int vacuumsensor_upper = 755; // min Value for activ-status
     // const int vacuumsensor_lower = 750;  //max Value for inactov-status
     const int time_cylinder_offout = 100; //
-    const int time_cylinder_in = 8*1000; //8sec to pull in
+    const int time_cylinder_in = 5*1000; //8sec to pull in
     void vacuumcup(boolean status_cup); //Start Vaccum
     boolean vacuumstatus();
 };
