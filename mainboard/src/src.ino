@@ -144,24 +144,24 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
    }
 
    Serial.print("Aktuelle vertikale Position unten: ");
-   Serial.println(3000-winch.position);
+   Serial.println(winch.max_distanz_Winch-winch.position);
 
    Serial.print("Vertikal Value von unten: ");
    Serial.println(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
 
-   if(3000-winch.position > bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
+   if(winch.max_distanz_Winch-winch.position > bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
      DEBUG_PRINTLN("Driving DOWN");
-     DEBUG_PRINTLN(3000-winch.position-bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
-     winch.drive(3000-winch.position-bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10,DOWN);
-   } else if (3000-winch.position < bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
+     DEBUG_PRINTLN(winch.max_distanz_Winch-winch.position-bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
+     winch.drive(winch.max_distanz_Winch-winch.position-bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10,DOWN);
+   } else if (winch.max_distanz_Winch-winch.position < bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
      DEBUG_PRINTLN("Driving UP");
-     DEBUG_PRINTLN(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(3000-winch.position));
-     winch.drive(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(3000-winch.position),DOWN);
+     DEBUG_PRINTLN(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(winch.max_distanz_Winch-winch.position));
+     winch.drive(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(winch.max_distanz_Winch-winch.position),DOWN);
    }
 
    bluetooth.vDigitalMemoryWrite(DRIVE_MANUAL, 0);
    bluetooth.vDigitalMemoryWrite(POSITION_HORIZONTAL, drive.actualHorizontalPosition/10);
-   bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,(3000-winch.position)/10);
+   bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,(winch.max_distanz_Winch-winch.position)/10);
    bluetooth.vDelay(500);
  }
 
