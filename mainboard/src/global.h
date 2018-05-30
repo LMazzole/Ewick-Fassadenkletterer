@@ -9,7 +9,7 @@ const int DOWN = 0;
 const bool RIGHT = 1;
 const bool LEFT = 0;
 
-// define const Bluetooth Modul§1
+// define const Bluetooth Modul
 #define AUTOMATIC_DRIVING (1)
 #define DRIVE_MANUAL (15)
 #define VALUE_HORIZONTAL (17)
@@ -74,8 +74,8 @@ const bool LEFT = 0;
 #define DRIVER_2_STEP (53)
 // #define pinalias  (29)
 // #define pinalias  (30)
-#define PNEUMATIC_VALVE_OUT  (37) //K1
-#define PNEUMATIC_VALVE_IN  (36)  //K2
+#define PNEUMATIC_VALVE_OUT  (36) //K1
+#define PNEUMATIC_VALVE_IN  (37)  //K2
 #define VACUUM_VALVE  (38)  //K3
 // #define pinalias  (34)
 // #define pinalias  (35)

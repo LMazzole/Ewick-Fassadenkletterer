@@ -26,13 +26,15 @@ class Drive
     void Acceleration();
     void SlowDown();
     void printDouble(double val, unsigned int precision);
-    int actualHorizontalPosition = 0;
+    unsigned int actualHorizontalPosition = 0;
 
   private:
     //int stepCountTop = 0;
     //int speedTop=0;
     //int stepCountBottom = 0;
     //int speedBottom = 0;
+    const unsigned int min_position_horizontal = 0;
+    const unsigned int max_position_horizontal = 2800;
     const int stepsPerRevolution = 200*4;
     const double durchmesserZahnradAn = 24.0;
     const double durchmesserZahnradAb = 77.0;

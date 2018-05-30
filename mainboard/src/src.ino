@@ -42,6 +42,8 @@ void setup(){
   Serial.println("Initialise Arduino");
 
 
+
+
   //bluetooth.DEBUG=false;               // set this value TRUE to enable the serial monitor status
 
 
@@ -88,38 +90,57 @@ void loop(){
 // Bluetooth Modul
 bluetooth.run();
 
+//int postionTablet = winch.max_distanz_Winch-winch.position
 // Automatisches Fahren
 if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
   // Zuerst auf Position 0 zurückfahren -> falls Manual fahren implementiert
-  DEBUG_PRINTLN("Anfangsposition fahren");
-  DEBUG_PRINT("Drive Up: ");
-  DEBUG_PRINTLN(winch.position);
-  winch.drive(winch.position,UP);
-  DEBUG_PRINT("Drive left: ");
-  DEBUG_PRINTLN(drive.actualHorizontalPosition);
-  drive.Driving(drive.actualHorizontalPosition, LEFT);
+  DEBUG_PRINTLN("ANFANGSPOSITION ANFAHREN");
+      DEBUG_PRINT("Drive Up: ");
+      DEBUG_PRINTLN(winch.position);
+      winch.drive(winch.position,UP);
+      DEBUG_PRINT("Drive left: ");
+      DEBUG_PRINTLN(drive.actualHorizontalPosition);
+      drive.Driving(drive.actualHorizontalPosition, LEFT);
 
-  DEBUG_PRINTLN("Drive RIGHT 500");
-  drive.Driving(600, RIGHT);
-  DEBUG_PRINTLN("Drive DOWN 500");
-  winch.drive(600, DOWN);
-  DEBUG_PRINTLN("Cylinder ausfahren");
-  pneumatic.cylinderout();
+  DEBUG_PRINTLN("POSITION 1 ANFAHREN");
+      DEBUG_PRINTLN("Drive RIGHT 500");
+      drive.Driving(550, RIGHT);
+      DEBUG_PRINTLN("Drive DOWN 500");
+      winch.drive(600, DOWN);
+      DEBUG_PRINTLN("Cylinder ausfahren");
+      pneumatic.cylinderout();
+      winch.drive(100,DOWN);
+      bluetooth.vDelay(10000);
+      DEBUG_PRINTLN("Cylinder einfahren");
+      winch.drive(100,UP);
+      pneumatic.cylinderin();
 
-  bluetooth.vDelay(5000);
+  DEBUG_PRINTLN("POSITION 2 ANFAHREN");
+      DEBUG_PRINTLN("Drive DOWN 500");
+      winch.drive(1900, DOWN);
+      DEBUG_PRINTLN("Drive RIGHT 500");
+      drive.Driving(1700, RIGHT);
+      DEBUG_PRINTLN("Cylinder ausfahren");
+      pneumatic.cylinderout();
+      winch.drive(100,DOWN);
+      bluetooth.vDelay(10000);
+      DEBUG_PRINTLN("Cylinder einfahren");
+      winch.drive(100,UP);
+      pneumatic.cylinderin();
 
-  DEBUG_PRINTLN("Cylinder einfahren");
-  pneumatic.cylinderin();
-  DEBUG_PRINTLN("Drive UP 500");
-  winch.drive(600, UP);
-  DEBUG_PRINTLN("Drive LEFT 500");
-  drive.Driving(600, LEFT);
+  DEBUG_PRINTLN("ANFANGSPOSITION ANFAHREN");
+          DEBUG_PRINT("Drive Up: ");
+          DEBUG_PRINTLN(winch.position);
+          winch.drive(winch.position,UP);
+          DEBUG_PRINT("Drive left: ");
+          DEBUG_PRINTLN(drive.actualHorizontalPosition);
+          drive.Driving(drive.actualHorizontalPosition, LEFT);
 
 
 
   bluetooth.vDigitalMemoryWrite(AUTOMATIC_DRIVING, 0);
-  bluetooth.vDigitalMemoryWrite(POSITION_HORIZONTAL, 0);
-  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL, 300);
+  bluetooth.vDigitalMemoryWrite(POSITION_HORIZONTAL, drive.actualHorizontalPosition/10);
+  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,(winch.max_distanz_Winch-winch.position)/10);
   bluetooth.vDelay(5000);
 }
 
@@ -149,14 +170,14 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
    DEBUG_PRINT("Vertikal Value von unten: ");
    DEBUG_PRINTLN(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
 
-   if(winch.max_distanz_Winch-winch.position > bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
+   if( (winch.max_distanz_Winch-winch.position) > (bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10) ){
      DEBUG_PRINTLN("Driving DOWN");
      DEBUG_PRINTLN(winch.max_distanz_Winch-winch.position-bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10);
      winch.drive(winch.max_distanz_Winch-winch.position-bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10,DOWN);
-   } else if (winch.max_distanz_Winch-winch.position < bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10){
+   } else {
      DEBUG_PRINTLN("Driving UP");
      DEBUG_PRINTLN(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(winch.max_distanz_Winch-winch.position));
-     winch.drive(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(winch.max_distanz_Winch-winch.position),DOWN);
+     winch.drive(bluetooth.vDigitalMemoryRead(VALUE_VERTIKAL)*10-(winch.max_distanz_Winch-winch.position),UP);
    }
 
    bluetooth.vDigitalMemoryWrite(DRIVE_MANUAL, 0);
@@ -166,13 +187,17 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
  }
 
 if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_IN) == 1){
+  winch.drive(100,UP);
   pneumatic.cylinderin();
   bluetooth.vDigitalMemoryWrite(ZYLINDER_MANUAL_IN, 0);
+  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,(winch.max_distanz_Winch-winch.position)/10);
 }
 
 if (bluetooth.vDigitalMemoryRead(ZYLINDER_MANUAL_OUT) == 1){
   pneumatic.cylinderout();
+  winch.drive(60,DOWN);
   bluetooth.vDigitalMemoryWrite(ZYLINDER_MANUAL_OUT, 0);
+  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,(winch.max_distanz_Winch-winch.position)/10);
 }
 
 // Serial Eingabe
