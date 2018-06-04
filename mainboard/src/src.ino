@@ -119,7 +119,7 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
       DEBUG_PRINTLN("Drive DOWN 500");
       winch.drive(1900, DOWN);
       DEBUG_PRINTLN("Drive RIGHT 500");
-      drive.Driving(1700, RIGHT);
+      drive.Driving(1400, RIGHT);
       DEBUG_PRINTLN("Cylinder ausfahren");
       pneumatic.cylinderout();
       winch.drive(100,DOWN);

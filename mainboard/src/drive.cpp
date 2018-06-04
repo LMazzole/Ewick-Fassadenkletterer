@@ -62,19 +62,20 @@ void Drive::Driving(unsigned int driveDistance, int direction){
   printDouble(neededSteps,10);
 
   if ( driveDistance > actualHorizontalPosition && direction == 0 ) {
-      return;
+     return;
   }
   if( actualHorizontalPosition+driveDistance > max_position_horizontal && direction == 1){
-    return;
+   return;
   }
 
-  if(neededSteps < 40*(sizeof(sin3)/sizeof(sin3[0]))){
+
+  if(neededSteps < 20*(sizeof(sin3)/sizeof(sin3[0]))){
     DEBUG_PRINT("Die ausgewählte Distanz ist zu klein!");
     return;
   }
   else {
 
-    neededSteps = neededSteps - 40*(sizeof(sin3)/sizeof(sin3[0]));
+    neededSteps = neededSteps - 20*(sizeof(sin3)/sizeof(sin3[0]));
 
     Acceleration();
 
@@ -92,7 +93,7 @@ void Drive::Driving(unsigned int driveDistance, int direction){
     }
     DEBUG_PRINTLN("==Fahren Ende==");
 
-   SlowDown();
+   //SlowDown();
 
    if(direction == 1){
       actualHorizontalPosition = actualHorizontalPosition + driveDistance;
