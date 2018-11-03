@@ -14,7 +14,7 @@ class Winch
     void initialise();
     void drive(int distanz, int direction);
     int position = 0;
-    const int max_distanz_Winch = 3000; // height of the Wall in mm
+    const int max_distanz_Winch = 500; // height of the Wall in mm
     const int min_distanz_Winch = 0; //
 
 

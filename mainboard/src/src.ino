@@ -38,7 +38,7 @@ void setup(){
 
   Serial.begin(9600);                // Set serial monitor baud rate
   //bluetoothSerial.begin(9600);
-  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,300);
+  bluetooth.vDigitalMemoryWrite(POSITION_VERTIKAL,winch.max_distanz_Winch/10);
   Serial.println("Initialise Arduino");
 
 
@@ -102,31 +102,39 @@ if (bluetooth.vDigitalMemoryRead(AUTOMATIC_DRIVING) == 1){
       DEBUG_PRINTLN(drive.actualHorizontalPosition);
       drive.Driving(drive.actualHorizontalPosition, LEFT);
 
-  DEBUG_PRINTLN("POSITION 1 ANFAHREN");
-      DEBUG_PRINTLN("Drive RIGHT 500");
-      drive.Driving(550, RIGHT);
-      DEBUG_PRINTLN("Drive DOWN 500");
-      winch.drive(600, DOWN);
-      DEBUG_PRINTLN("Cylinder ausfahren");
-      pneumatic.cylinderout();
-      winch.drive(100,DOWN);
-      bluetooth.vDelay(10000);
-      DEBUG_PRINTLN("Cylinder einfahren");
-      winch.drive(100,UP);
-      pneumatic.cylinderin();
+// Position am Marktplatz ANFAHREN
+    DEBUG_PRINTLN("Drive RIGHT 500");
+    drive.Driving(550, RIGHT);
+    DEBUG_PRINTLN("Drive DOWN 500");
+    winch.drive(400, DOWN);
 
-  DEBUG_PRINTLN("POSITION 2 ANFAHREN");
-      DEBUG_PRINTLN("Drive DOWN 500");
-      winch.drive(1900, DOWN);
-      DEBUG_PRINTLN("Drive RIGHT 500");
-      drive.Driving(1400, RIGHT);
-      DEBUG_PRINTLN("Cylinder ausfahren");
-      pneumatic.cylinderout();
-      winch.drive(100,DOWN);
-      bluetooth.vDelay(10000);
-      DEBUG_PRINTLN("Cylinder einfahren");
-      winch.drive(100,UP);
-      pneumatic.cylinderin();
+
+// Position an der Wand anfahren
+  // DEBUG_PRINTLN("POSITION 1 ANFAHREN");
+  //     DEBUG_PRINTLN("Drive RIGHT 500");
+  //     drive.Driving(550, RIGHT);
+  //     DEBUG_PRINTLN("Drive DOWN 500");
+  //     winch.drive(600, DOWN);
+  //     DEBUG_PRINTLN("Cylinder ausfahren");
+  //     pneumatic.cylinderout();
+  //     winch.drive(100,DOWN);
+  //     bluetooth.vDelay(10000);
+  //     DEBUG_PRINTLN("Cylinder einfahren");
+  //     winch.drive(100,UP);
+  //     pneumatic.cylinderin();
+  //
+  // DEBUG_PRINTLN("POSITION 2 ANFAHREN");
+  //     DEBUG_PRINTLN("Drive DOWN 500");
+  //     winch.drive(1900, DOWN);
+  //     DEBUG_PRINTLN("Drive RIGHT 500");
+  //     drive.Driving(1400, RIGHT);
+  //     DEBUG_PRINTLN("Cylinder ausfahren");
+  //     pneumatic.cylinderout();
+  //     winch.drive(100,DOWN);
+  //     bluetooth.vDelay(10000);
+  //     DEBUG_PRINTLN("Cylinder einfahren");
+  //     winch.drive(100,UP);
+  //     pneumatic.cylinderin();
 
   DEBUG_PRINTLN("ANFANGSPOSITION ANFAHREN");
           DEBUG_PRINT("Drive Up: ");
